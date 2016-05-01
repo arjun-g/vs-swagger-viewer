@@ -2,8 +2,13 @@
   "name": "swagger-viewer",
   "displayName": "Swagger Viewer",
   "description": "Preview your swagger files (yaml and json)",
+  "icon": "logo.png",
+  "galleryBanner": {
+      "color": "#4a4a4a",
+      "theme": "dark"
+  },
   "version": "0.0.1",
-  "publisher": "ArjunG",
+  "publisher": "Arjun",
   "engines": {
     "vscode": "^0.10.10"
   },
@@ -33,5 +38,13 @@
     "express": "^4.13.4",
     "shelljs": "^0.6.0",
     "socket.io": "^1.4.5"
-  }
+  },
+  "bugs": {
+        "url": "https://github.com/Microsoft/vscode-spell-check/issues"
+    },
+    "homepage": "https://github.com/Microsoft/vscode-spell-check/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Microsoft/vscode-spell-check.git"
+    }
 }
