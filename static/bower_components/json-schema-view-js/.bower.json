@@ -1,0 +1,41 @@
+{
+  "name": "json-schema-view-js",
+  "version": "0.2.0",
+  "authors": [
+    "Mohsen Azimi <me@azimi.me>"
+  ],
+  "main": [
+    "dist/bundle.js",
+    "dist/style.css"
+  ],
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "json"
+  ],
+  "license": "MIT",
+  "homepage": "mohsen1/json-schema-view-js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "json-formatter-js": "~0.2.0"
+  },
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.0",
+    "commit": "f9b06eb7f0d89b5e4c7cff2e6139121b817c8d2e"
+  },
+  "_source": "https://github.com/mohsen1/json-schema-view-js.git",
+  "_target": "~0.2.0",
+  "_originalSource": "json-schema-view-js"
+}

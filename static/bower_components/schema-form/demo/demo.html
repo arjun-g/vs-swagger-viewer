@@ -1,0 +1,79 @@
+<!doctype html>
+<html ng-app="demo">
+<head>
+  <meta charset="utf-8">
+  <title>Angular JSON Schema Form Demo</title>
+
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="../bower_components/json-editor/dist/jsoneditor.js"></script>
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+
+  <link rel="stylesheet" href="../dist/schema-form.css">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body ng-controller="TestCtrl">
+  <div class="container">
+    <header>
+      <h1 class="text-muted">Angular JSON Schema Form Demo</h1>
+      <div class="star-fork">
+        <iframe src="https://ghbtns.com/github-btn.html?user=mohsen1&repo=angular-json-schema-form&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=mohsen1&repo=angular-json-schema-form&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
+      </div>
+
+
+
+    </header>
+
+
+    <div class="usage row">
+      <h4>Simple usage</h4>
+      <p>This is a simple usage of <code>mohsen1.schema-form</code></p>
+      <pre>
+&lt;form schema-form="{type: 'string', title: 'firstName' }" ng-model="simpleString"&gt;
+  &lt;button class="btn btn-primary" type="submit"&gt;Submit&lt;/button>
+&lt;/form&gt;
+&lt;input ng-model="simpleString"&gt;
+      </pre>
+
+      <h4>Results</h4>
+      <form schema-form="{type: 'string', title: 'My String' }" ng-model="simpleString">
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+      <br>
+      <input ng-model="simpleString">
+    </div>
+
+    <div class="usage row">
+      <h4>Two Way Data Binding</h4>
+      <p>This demo demonstrate two way data binding and live <code>ng-model</code> and <code>schema-form</code> Attributes. Change model and the schema accordingly and click commit to see the changes.</p>
+      <div class="row live">
+        <div class="col-md-4">
+          <h5>Schema</h5>
+          <textarea  ng-model="complexSchemaString"></textarea>
+          <button ng-click="commit()">Commit</button>
+        </div>
+        <div class="col-md-4">
+          <h5>Model</h5>
+          <textarea  ng-model="complexModelString"></textarea>
+          <button ng-click="commit()">Commit</button>
+        </div>
+        <div class="col-md-4">
+          <h5>Form</h5>
+          <form schema-form="complexSchema" ng-model="complexModel"></form>
+        </div>
+      </div>
+    </div>
+
+    <div class="usage row">
+      <h4>Advanced Form</h4>
+      <p>In this example, schema is loaded via an XHR call.</p>
+      <form schema-form="advancedSchema">
+        <button>Submit</button>
+      </form>
+    </div>
+  </div>
+  <script src="../dist/schema-form.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>

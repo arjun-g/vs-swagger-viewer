@@ -1,0 +1,23 @@
+{
+  "name": "sway-worker",
+  "version": "1.11.0",
+  "description": "sway in a worker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohsen1/sway-worker.git"
+  },
+  "keywords": [
+    "swagger",
+    "worker"
+  ],
+  "author": "Mohsen Azimi <me@azimi.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mohsen1/sway-worker/issues"
+  },
+  "homepage": "https://github.com/mohsen1/sway-worker#readme"
+}

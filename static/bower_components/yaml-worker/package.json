@@ -1,0 +1,33 @@
+{
+  "name": "yaml-worker",
+  "version": "2.1.0",
+  "description": "JS-YAML and YAML-JS wrapper with Worker API",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start --single-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohsen1/yaml-worker.git"
+  },
+  "keywords": [
+    "YAML",
+    "Woker"
+  ],
+  "author": "Mohsen Azimi <me@azimi.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mohsen1/yaml-worker/issues"
+  },
+  "homepage": "https://github.com/mohsen1/yaml-worker#readme",
+  "devDependencies": {
+    "karma": "^0.13.2",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-cli": "^0.1.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "karma-mocha-reporter": "^1.0.2",
+    "mocha": "^2.2.5"
+  }
+}

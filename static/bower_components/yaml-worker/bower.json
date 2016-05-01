@@ -1,0 +1,27 @@
+{
+  "name": "yaml-worker",
+  "main": "index.js",
+  "version": "2.1.0",
+  "authors": [
+    "Mohsen Azimi <me@azimi.me>"
+  ],
+  "description": "JS-YAML and YAML-JS wrapper with Worker API",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "YAML",
+    "Worker"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "js-yaml": "~3.4.2",
+    "yaml-js": "~0.1.3"
+  }
+}

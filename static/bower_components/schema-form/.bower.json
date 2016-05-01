@@ -1,0 +1,37 @@
+{
+  "name": "schema-form",
+  "version": "0.1.4",
+  "authors": [
+    "Mohsen Azimi <me@azimi.me>"
+  ],
+  "description": "",
+  "main": "dist/schema-form.js",
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.3.2",
+    "angular-mocks": "~1.4.2"
+  },
+  "dependencies": {
+    "json-editor": "~0.7.2",
+    "angular": "~1.4.1"
+  },
+  "homepage": "https://github.com/mohsen1/angular-json-schema-form",
+  "_release": "0.1.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.4",
+    "commit": "fb5f933bf82121a26a8a3330ffc265b076d3e38b"
+  },
+  "_source": "https://github.com/mohsen1/angular-json-schema-form.git",
+  "_target": "~0.1.4",
+  "_originalSource": "schema-form"
+}

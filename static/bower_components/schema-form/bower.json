@@ -1,0 +1,27 @@
+{
+  "name": "schema-form",
+  "version": "0.1.4",
+  "authors": [
+    "Mohsen Azimi <me@azimi.me>"
+  ],
+  "description": "",
+  "main": "dist/schema-form.js",
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.3.2",
+    "angular-mocks": "~1.4.2"
+  },
+  "dependencies": {
+    "json-editor": "~0.7.2",
+    "angular": "~1.4.1"
+  }
+}

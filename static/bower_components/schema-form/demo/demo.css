@@ -1,0 +1,24 @@
+.usage {
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,0.09);
+  border-radius: 5px;
+  margin-bottom: 1em;
+}
+
+.live textarea {
+    width: 100%;
+    min-height: 20em;
+    display: block;
+    font-family: monospace;
+}
+
+header {
+    overflow: hidden;
+}
+header h1 {
+    float: left;
+}
+.star-fork {
+    float: right;
+    padding: 1em;
+}

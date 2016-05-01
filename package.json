@@ -1,0 +1,37 @@
+{
+  "name": "swagger-viewer",
+  "displayName": "Swagger Viewer",
+  "description": "Preview your swagger files (yaml and json)",
+  "version": "0.0.1",
+  "publisher": "ArjunG",
+  "engines": {
+    "vscode": "^0.10.10"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:yaml",
+    "onLanguage:json"
+  ],
+  "main": "./extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.previewSwagger",
+        "title": "Preview Swagger"
+      }
+    ]
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "vscode": "^0.11.0"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "shelljs": "^0.6.0",
+    "socket.io": "^1.4.5"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "sway-worker",
+  "version": "1.11.0",
+  "authors": [
+    "Mohsen Azimi <me@azimi.me>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/mohsen1/sway-worker",
+  "_release": "1.11.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.11.0",
+    "commit": "e01c2903ef53f25fce956de87a37dbb5a48ffd55"
+  },
+  "_source": "https://github.com/mohsen1/sway-worker.git",
+  "_target": "~1.11.0",
+  "_originalSource": "sway-worker"
+}

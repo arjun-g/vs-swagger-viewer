@@ -1,0 +1,18 @@
+<html>
+  <head></head>
+  <body>
+    <script src="../index.js"></script>
+    <script>
+      var worker = new YAMLWorker('../');
+
+      worker.load('me: 1', function (err, result) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(result);
+        }
+      });
+
+    </script>
+  </body>
+</html>
