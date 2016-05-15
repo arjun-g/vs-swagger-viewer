@@ -1,13 +1,14 @@
 {
   "name": "swagger-viewer",
   "displayName": "Swagger Viewer",
-  "description": "Preview your swagger files (yaml and json)",
-  "icon": "logo.png",
+  "description": "Swagger Viewer lets you preview swagger files as you type in Visual Studio Code.",
+  "icon": "images/logo.png",
   "galleryBanner": {
-      "color": "#4a4a4a",
-      "theme": "dark"
+    "color": "#4a4a4a",
+    "theme": "dark"
   },
-  "version": "0.0.1",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "version": "1.0.0",
   "publisher": "Arjun",
   "engines": {
     "vscode": "^0.10.10"
@@ -28,23 +29,19 @@
       }
     ]
   },
-  "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install"
-  },
   "devDependencies": {
     "vscode": "^0.11.0"
   },
   "dependencies": {
     "express": "^4.13.4",
-    "shelljs": "^0.6.0",
     "socket.io": "^1.4.5"
   },
   "bugs": {
-        "url": "https://github.com/Microsoft/vscode-spell-check/issues"
-    },
-    "homepage": "https://github.com/Microsoft/vscode-spell-check/blob/master/README.md",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Microsoft/vscode-spell-check.git"
-    }
+    "url": "https://github.com/arjun-g/vs-swagger-viewer/issues"
+  },
+  "homepage": "https://github.com/arjun-g/vs-swagger-viewer/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arjun-g/vs-swagger-viewer.git"
+  }
 }
