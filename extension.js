@@ -11,7 +11,7 @@ var ports = {}
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
-
+  
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     
@@ -19,6 +19,15 @@ function activate(context) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     var disposable = vscode.commands.registerCommand('extension.previewSwagger', function () {
+        let handlePreviewResponse = (option) => {
+            if (typeof option == 'undefined') {
+                return;
+            }
+            if (option.action == "open") {
+                let uri = vscode.Uri.parse(option.url);
+                vscode.commands.executeCommand('vscode.open', uri);
+            }
+        };
 
         var editor = vscode.window.activeTextEditor;
         var doc = editor.document;
@@ -40,7 +49,12 @@ function activate(context) {
                         servers[fileName] = server;
                         ports[fileName] = port;
                         ios[fileName] = io;
-                        vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + port + "/");
+                        vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + port + "/",
+                            {
+                                title: 'Open',
+                                action: 'open',
+                                url: 'http://localhost:' + port + '/'
+                            }).then(handlePreviewResponse);
                         //console.log('Example app listening on port 3000!');
                         ios[fileName].on("connection", function (socket) {
                             socket.on("GET_UPDATE", function (data, fn) {
@@ -64,7 +78,12 @@ function activate(context) {
             startServer(9000);
         }
         else{
-            vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + ports[fileName] + "/");
+            vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + ports[fileName] + "/",
+                {
+                    title: 'Open',
+                    action: 'open',
+                    url: 'http://localhost:' + ports[fileName] + '/'
+                }).then(handlePreviewResponse);
         }
     });
     context.subscriptions.push(disposable);
