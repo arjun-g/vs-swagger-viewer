@@ -19,6 +19,7 @@ function activate(context) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     var disposable = vscode.commands.registerCommand('extension.previewSwagger', function () {
+        var defaultPort = vscode.workspace.getConfiguration('swaggerViewer').defaultPort || 9000;
         let handlePreviewResponse = (option) => {
             if (typeof option == 'undefined') {
                 return;
@@ -75,7 +76,7 @@ function activate(context) {
                     startServer(++port);
                 }
             }
-            startServer(9000);
+            startServer(defaultPort);
         }
         else{
             vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + ports[fileName] + "/",

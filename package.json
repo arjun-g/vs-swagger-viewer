@@ -27,7 +27,24 @@
         "command": "extension.previewSwagger",
         "title": "Preview Swagger"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Swagger Viewer configuration",
+      "properties": {
+        "swaggerViewer.defaultPort": {
+          "type": "integer",
+          "default": 9000,
+          "description": "Default port in which the preview should be opened."
+        }
+      } 
+    },
+    "keybindings": [{
+      "command": "extension.previewSwagger",
+      "key": "shift+alt+p",
+      "mac": "shift+alt+p",
+      "when": "editorTextFocus"
+    }]
   },
   "devDependencies": {
     "vscode": "^0.11.0"
