@@ -8,10 +8,57 @@ var ports = {}
     , ios = {}
     ;
 
+class Viewer {
+    constructor(context) {
+        this.context = context;
+        this.uri = vscode.Uri.parse('swagger://preview');
+        this.Emmittor = new vscode.EventEmitter();
+        this.onDidChange = this.Emmittor.event;
+    }
+
+    provideTextDocumentContent(uri, token) {
+        return `
+        <html>
+            <body style="margin:0px;padding:0px;overflow:hidden">
+                <div style="position:fixed;height:100%;width:100%;">
+                <iframe src="http://localhost:9000" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"></iframe>
+                </div>
+            </body>
+        </html>
+        `;
+    }
+
+    display() {
+        var editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+        return vscode.commands.executeCommand('vscode.previewHtml', this.uri, vscode.ViewColumn.Two, 'Swagger Preview')
+            .then(success => {
+                vscode.window.showTextDocument(editor.document);
+                return;
+            }, reason => {
+                vscode.window.showErrorMessage(reason);
+            });
+    }
+
+    register() {
+        var ds = [];
+        var disposable = vscode.workspace.registerTextDocumentContentProvider('swagger', this);
+        ds.push(disposable);
+        return ds;
+    }
+    upate() {
+        this.Emmittor.fire(this.uri);
+    }
+};
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
   
+    var viewer = new Viewer(context);
+    var ds = viewer.register();
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     
@@ -19,6 +66,7 @@ function activate(context) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     var disposable = vscode.commands.registerCommand('extension.previewSwagger', function () {
+        var openBrowser = vscode.workspace.getConfiguration('swaggerViewer').previewInBrowser || false;
         var defaultPort = vscode.workspace.getConfiguration('swaggerViewer').defaultPort || 9000;
         let handlePreviewResponse = (option) => {
             if (typeof option == 'undefined') {
@@ -31,6 +79,9 @@ function activate(context) {
         };
 
         var editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
         var doc = editor.document;
         var fileName = doc.fileName.toLowerCase();
         if (!servers[fileName]) {
@@ -50,12 +101,16 @@ function activate(context) {
                         servers[fileName] = server;
                         ports[fileName] = port;
                         ios[fileName] = io;
+                        if (openBrowser) {
                         vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + port + "/",
                             {
                                 title: 'Open',
                                 action: 'open',
                                 url: 'http://localhost:' + port + '/'
                             }).then(handlePreviewResponse);
+                        } else {
+                            viewer.display();
+                        }
                         //console.log('Example app listening on port 3000!');
                         ios[fileName].on("connection", function (socket) {
                             socket.on("GET_UPDATE", function (data, fn) {
@@ -67,6 +122,7 @@ function activate(context) {
                         context.subscriptions.push(previewSwagger);
                         context.subscriptions.push(previewSwaggerController);
                         previewSwagger.update();
+                        viewer.upate();
                     });
                     server.on("error", function (err) {
                         startServer(++port);
@@ -79,15 +135,20 @@ function activate(context) {
             startServer(defaultPort);
         }
         else{
+            if (openBrowser) {
             vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + ports[fileName] + "/",
                 {
                     title: 'Open',
                     action: 'open',
                     url: 'http://localhost:' + ports[fileName] + '/'
                 }).then(handlePreviewResponse);
+            } else {
+                viewer.display();
+            }
         }
     });
     context.subscriptions.push(disposable);
+    context.subscriptions.push(...ds);
 }
 
 function PreviewSwagger(fileName) {

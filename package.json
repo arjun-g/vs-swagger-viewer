@@ -36,6 +36,11 @@
           "type": "integer",
           "default": 9000,
           "description": "Default port in which the preview should be opened."
+        },
+        "swaggerViewer.previewInBrowser": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to open preview in browser, default: preview inside vscode"
         }
       } 
     },
