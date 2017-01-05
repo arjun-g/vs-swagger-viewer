@@ -17,15 +17,17 @@ class Viewer {
     }
 
     provideTextDocumentContent(uri, token) {
-        return `
+        var port = this.port || 9000;
+        var html =  `
         <html>
             <body style="margin:0px;padding:0px;overflow:hidden">
                 <div style="position:fixed;height:100%;width:100%;">
-                <iframe src="http://localhost:9000" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"></iframe>
+                <iframe src="http://localhost:${port}" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"></iframe>
                 </div>
             </body>
         </html>
         `;
+        return html;
     }
 
     display() {
@@ -47,6 +49,9 @@ class Viewer {
         var disposable = vscode.workspace.registerTextDocumentContentProvider('swagger', this);
         ds.push(disposable);
         return ds;
+    }
+    setPort(port) {
+        this.port = port;
     }
     upate() {
         this.Emmittor.fire(this.uri);
@@ -109,6 +114,7 @@ function activate(context) {
                                 url: 'http://localhost:' + port + '/'
                             }).then(handlePreviewResponse);
                         } else {
+                            viewer.setPort(port);
                             viewer.display();
                         }
                         //console.log('Example app listening on port 3000!');
