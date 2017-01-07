@@ -1,66 +1,69 @@
 {
-    "name": "swagger-viewer",
-    "displayName": "Swagger Viewer",
-    "description": "Swagger Viewer lets you preview swagger files as you type in Visual Studio Code.",
-    "icon": "images/logo.png",
-    "galleryBanner": {
-        "color": "#4a4a4a",
-        "theme": "dark"
-    },
-    "license": "SEE LICENSE IN LICENSE.md",
-    "version": "1.2.0",
-    "publisher": "Arjun",
-    "engines": {
-        "vscode": "^0.10.10"
-    },
-    "categories": [
-        "Other"
+  "name": "swagger-viewer",
+  "displayName": "Swagger Viewer",
+  "description": "Swagger Viewer lets you preview swagger files as you type in Visual Studio Code.",
+  "icon": "images/logo.png",
+  "galleryBanner": {
+    "color": "#4a4a4a",
+    "theme": "dark"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "version": "1.3.0",
+  "publisher": "Arjun",
+  "engines": {
+    "vscode": "^0.10.10"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:yaml",
+    "onLanguage:json"
+  ],
+  "main": "./extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.previewSwagger",
+        "title": "Preview Swagger"
+      }
     ],
-    "activationEvents": [
-        "onLanguage:yaml",
-        "onLanguage:json"
-    ],
-    "main": "./extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.previewSwagger",
-                "title": "Preview Swagger"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "Swagger Viewer configuration",
-            "properties": {
-                "swaggerViewer.defaultPort": {
-                    "type": "integer",
-                    "default": 9000,
-                    "description": "Default port in which the preview should be opened."
-                }
-            }
+    "configuration": {
+      "type": "object",
+      "title": "Swagger Viewer configuration",
+      "properties": {
+        "swaggerViewer.defaultPort": {
+          "type": "integer",
+          "default": 9000,
+          "description": "Default port in which the preview should be opened."
         },
-        "keybindings": [
-            {
-                "command": "extension.previewSwagger",
-                "key": "shift+alt+p",
-                "mac": "shift+alt+p",
-                "when": "editorTextFocus"
-            }
-        ]
+        "swaggerViewer.previewInBrowser": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to open preview in browser, default: preview inside vscode"
+        }
+      } 
     },
-    "devDependencies": {
-        "vscode": "^0.11.0"
-    },
-    "dependencies": {
-        "express": "^4.13.4",
-        "socket.io": "^1.4.5"
-    },
-    "bugs": {
-        "url": "https://github.com/arjun-g/vs-swagger-viewer/issues"
-    },
-    "homepage": "https://github.com/arjun-g/vs-swagger-viewer/blob/master/README.md",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/arjun-g/vs-swagger-viewer.git"
-    }
+    "keybindings": [{
+      "command": "extension.previewSwagger",
+      "key": "shift+alt+p",
+      "mac": "shift+alt+p",
+      "when": "editorTextFocus"
+    }]
+  },
+  "devDependencies": {
+    "vscode": "^0.11.0"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
+  },
+  "bugs": {
+    "url": "https://github.com/arjun-g/vs-swagger-viewer/issues"
+  },
+  "homepage": "https://github.com/arjun-g/vs-swagger-viewer/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arjun-g/vs-swagger-viewer.git"
+  }
 }
