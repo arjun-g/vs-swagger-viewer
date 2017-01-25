@@ -175,7 +175,7 @@ function PreviewSwaggerController(swag) {
         var editor = vscode.window.activeTextEditor;
         if (!editor) { return; }
         var doc = editor.document;
-        if (doc.languageId === "yaml") {
+        if (doc.languageId === "yaml" || doc.languageId === "json") {
             swag.update();
         } else {
             swag.close();
