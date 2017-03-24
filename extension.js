@@ -35,13 +35,12 @@ class Viewer {
         if (!editor) {
             return;
         }
-        return vscode.commands.executeCommand('vscode.previewHtml', this.uri, vscode.ViewColumn.Two, 'Swagger Preview')
-            .then(success => {
-                vscode.window.showTextDocument(editor.document);
-                return;
-            }, reason => {
-                vscode.window.showErrorMessage(reason);
-            });
+        return vscode.commands.executeCommand('vscode.previewHtml', this.uri, vscode.ViewColumn.Two, 'Swagger Preview - ' + path.basename(editor.document.fileName.toLowerCase()))
+        .then(success => {
+            vscode.window.showTextDocument(editor.document);
+        }, reason => {
+            vscode.window.showErrorMessage(reason);
+        });
     }
 
     register() {
@@ -62,17 +61,21 @@ class Viewer {
 // your extension is activated the very first time the command is executed
 function activate(context) {
   
-    var viewer = new Viewer(context);
-    var ds = viewer.register();
+    // var viewer = new Viewer(context);
+    // var ds = viewer.register();
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
+    var lastDefaultPort
+    var defaultPort = lastDefaultPort = vscode.workspace.getConfiguration('swaggerViewer').defaultPort || 9000;
     var disposable = vscode.commands.registerCommand('extension.previewSwagger', function () {
         var openBrowser = vscode.workspace.getConfiguration('swaggerViewer').previewInBrowser || false;
-        var defaultPort = vscode.workspace.getConfiguration('swaggerViewer').defaultPort || 9000;
+        if(vscode.workspace.getConfiguration('swaggerViewer').defaultPort && lastDefaultPort != vscode.workspace.getConfiguration('swaggerViewer').defaultPort){
+            defaultPort = lastDefaultPort = vscode.workspace.getConfiguration('swaggerViewer').defaultPort
+        }
         let handlePreviewResponse = (option) => {
             if (typeof option == 'undefined') {
                 return;
@@ -90,6 +93,7 @@ function activate(context) {
         var doc = editor.document;
         var fileName = doc.fileName.toLowerCase();
         if (!servers[fileName]) {
+
             // Display a message box to the user
             //vscode.window.showInformationMessage('Hello World!');
             var express = require('express');
@@ -107,18 +111,25 @@ function activate(context) {
                         ports[fileName] = port;
                         ios[fileName] = io;
                         if (openBrowser) {
-                        vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + port + "/",
+                        vscode.window.showInformationMessage('Preview "' + path.basename(fileName) + '" in http://localhost:' + port + "/",
                             {
                                 title: 'Open',
                                 action: 'open',
                                 url: 'http://localhost:' + port + '/'
                             }).then(handlePreviewResponse);
                         } else {
+                            var viewer = new Viewer(context);
+                            var ds = viewer.register();
+                            context.subscriptions.push(...ds);
                             viewer.setPort(port);
                             viewer.display();
+                            viewer.upate();
                         }
                         //console.log('Example app listening on port 3000!');
                         ios[fileName].on("connection", function (socket) {
+                            socket.on("GET_NAME", function (data, fn) {
+                                fn(path.basename(fileName));
+                            })
                             socket.on("GET_UPDATE", function (data, fn) {
                                 fn(doc.getText());
                             })
@@ -128,33 +139,39 @@ function activate(context) {
                         context.subscriptions.push(previewSwagger);
                         context.subscriptions.push(previewSwaggerController);
                         previewSwagger.update();
-                        viewer.upate();
+                        defaultPort++;
+                        //viewer.upate();
                     });
                     server.on("error", function (err) {
-                        startServer(++port);
+                        startServer(++defaultPort);
                     })
                 }
                 catch (ex) {
-                    startServer(++port);
+                    startServer(++defaultPort);
                 }
             }
             startServer(defaultPort);
         }
         else{
             if (openBrowser) {
-            vscode.window.showInformationMessage('Preview "' + fileName.substring((fileName.lastIndexOf("\\") || fileName.lastIndexOf("/")) + 1) + '" in http://localhost:' + ports[fileName] + "/",
+            vscode.window.showInformationMessage('Preview "' + path.basename(fileName) + '" in http://localhost:' + ports[fileName] + "/",
                 {
                     title: 'Open',
                     action: 'open',
                     url: 'http://localhost:' + ports[fileName] + '/'
                 }).then(handlePreviewResponse);
             } else {
+                var viewer = new Viewer(context);
+                var ds = viewer.register();
+                context.subscriptions.push(...ds);
+                viewer.setPort(ports[fileName]);
                 viewer.display();
+                viewer.upate();
             }
         }
     });
     context.subscriptions.push(disposable);
-    context.subscriptions.push(...ds);
+    //context.subscriptions.push(...ds);
 }
 
 function PreviewSwagger(fileName) {
@@ -165,7 +182,6 @@ function PreviewSwagger(fileName) {
     }
     this.close = function () {
         servers[fileName].close();
-        console.log("CLOSED");
     }
 }
 
@@ -175,7 +191,7 @@ function PreviewSwaggerController(swag) {
         var editor = vscode.window.activeTextEditor;
         if (!editor) { return; }
         var doc = editor.document;
-        if (doc.languageId === "yaml") {
+        if (doc.languageId === "yaml" || doc.languageId === "json") {
             swag.update();
         } else {
             swag.close();
