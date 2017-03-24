@@ -1,4 +1,4 @@
-# Swagger Viewer
+# Swagger Viewer - v1.4.0
 ## Swagger Viewer lets you preview swagger files as you type in Visual Studio Code.
 
 It works on swagger files in json and yaml format. Preview happens in real time as you type.
@@ -45,16 +45,23 @@ Default port of the preview url can be changed by changing the `swaggerViewer.de
 
 ![Swagger Preview Settings](https://arjunstatic.blob.core.windows.net/public/swagger_preview_settings.gif)
 
-v1.2.0 Changes
+v1.4.0 Changes
 
-* Added `Open` button in message box. (By [@pmentz](https://github.com/pmentz) [https://github.com/arjun-g/vs-swagger-viewer/pull/3](https://github.com/arjun-g/vs-swagger-viewer/pull/3)
-* Added shortcut `Shift + Alt + P` to run the command
-* Ability to change default port from `User/Workspace Settings`.
+* Fixed - Preview of JSON Swagger files not getting updated in realtime. (By [@tmsns](https://github.com/tmsns))
+* Fixed - Preview window in vs code not switching to latest file.
+* Added - File name in preview window to identify which file is in preview.
+* Some performance fixes
 
 v1.3.0 Changes
 
-* Now preview swagger inside the editor itself. (By [@ferreus](https://github.com/ferreus) [https://github.com/arjun-g/vs-swagger-viewer/pull/7](https://github.com/arjun-g/vs-swagger-viewer/pull/7)
-* Preview iside editor by default
+* Added - Now preview swagger inside the editor itself. (By [@ferreus](https://github.com/ferreus) [https://github.com/arjun-g/vs-swagger-viewer/pull/7](https://github.com/arjun-g/vs-swagger-viewer/pull/7)
+* Added - Preview inside editor by default
+
+v1.2.0 Changes
+
+* Added - `Open` button in message box. (By [@pmentz](https://github.com/pmentz) [https://github.com/arjun-g/vs-swagger-viewer/pull/3](https://github.com/arjun-g/vs-swagger-viewer/pull/3)
+* Added - shortcut `Shift + Alt + P` to run the command
+* Added - Ability to change default port from `User/Workspace Settings`.
 
 ### Credits
 Swagger Viewer utilizes the following open source projects
