@@ -26,6 +26,10 @@
       margin:0;
       background: #fafafa;
     }
+
+    .download-url-wrapper {
+      visibility: hidden;
+    }
   </style>
 </head>
 
@@ -69,12 +73,13 @@
 
 <script src="./swagger-ui-bundle.js"> </script>
 <script src="./swagger-ui-standalone-preset.js"> </script>
+<script src="/socket.io/socket.io.js"></script>
 <script>
-window.onload = function() {
-  
+
+function buildSwaggerUI(jsonSpec) {
   // Build a system
   const ui = SwaggerUIBundle({
-    url: "http://petstore.swagger.io/v2/swagger.json",
+    spec: jsonSpec,
     dom_id: '#swagger-ui',
     deepLinking: true,
     presets: [
@@ -89,7 +94,18 @@ window.onload = function() {
 
   window.ui = ui
 }
-</script>
-</body>
 
+window.onload = function() {
+  var socket = io.connect();
+  socket.emit('GET_INITIAL', {}, (jsonSpec) => {
+    buildSwaggerUI(jsonSpec);
+  });
+
+  socket.on("TEXT_UPDATE", function (jsonSpec) {
+    buildSwaggerUI(jsonSpec);
+  });
+}
+</script>
+
+</body>
 </html>
