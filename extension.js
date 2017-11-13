@@ -3,6 +3,8 @@
 var vscode = require('vscode');
 var path = require('path');
 
+YAML = require('yamljs');
+
 var ports = {}
     , servers = {}
     , ios = {}
@@ -127,11 +129,8 @@ function activate(context) {
                         }
                         //console.log('Example app listening on port 3000!');
                         ios[fileName].on("connection", function (socket) {
-                            socket.on("GET_NAME", function (data, fn) {
-                                fn(path.basename(fileName));
-                            })
-                            socket.on("GET_UPDATE", function (data, fn) {
-                                fn(doc.getText());
+                            socket.on("GET_INITIAL", function (data, fn) {
+                                fn(GetParsedFile(fileName, doc.getText()));
                             })
                         })
                         var previewSwagger = new PreviewSwagger(fileName);
@@ -174,11 +173,27 @@ function activate(context) {
     //context.subscriptions.push(...ds);
 }
 
+function GetParsedFile(fileName, fileContent) {
+    let extension = GetFilenameExtension(fileName);
+
+    if (extension == "json") {
+        return JSON.parse(fileContent);
+    }
+
+    if (extension == "yaml") {
+        return YAML.parse(fileContent);
+    }
+}
+
+function GetFilenameExtension(fileName) {
+    return fileName.split('.').pop();
+}
+
 function PreviewSwagger(fileName) {
     var editor = vscode.window.activeTextEditor;
     var doc = editor.document;
     this.update = function () {
-        ios[fileName].emit("TEXT_UPDATE", doc.getText());
+        ios[fileName].emit("TEXT_UPDATE", GetParsedFile(fileName, doc.getText()));
     }
     this.close = function () {
         servers[fileName].close();

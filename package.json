@@ -42,21 +42,24 @@
           "default": false,
           "description": "Whether to open preview in browser, default: preview inside vscode"
         }
-      } 
+      }
     },
-    "keybindings": [{
-      "command": "extension.previewSwagger",
-      "key": "shift+alt+p",
-      "mac": "shift+alt+p",
-      "when": "editorTextFocus"
-    }]
+    "keybindings": [
+      {
+        "command": "extension.previewSwagger",
+        "key": "shift+alt+p",
+        "mac": "shift+alt+p",
+        "when": "editorTextFocus"
+      }
+    ]
   },
   "devDependencies": {
     "vscode": "^0.11.0"
   },
   "dependencies": {
     "express": "^4.13.4",
-    "socket.io": "^1.4.5"
+    "socket.io": "^1.4.5",
+    "yamljs": "^0.3.0"
   },
   "bugs": {
     "url": "https://github.com/arjun-g/vs-swagger-viewer/issues"
