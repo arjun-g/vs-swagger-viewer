@@ -180,7 +180,7 @@ function GetParsedFile(fileName, fileContent) {
         return JSON.parse(fileContent);
     }
 
-    if (extension == "yaml") {
+    if (extension == "yaml" || extension == "yml") {
         return YAML.parse(fileContent);
     }
 }
