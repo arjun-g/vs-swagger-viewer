@@ -174,12 +174,12 @@ function activate(context) {
 }
 
 function GetParsedFile(fileName, document) {
+    fileContent = document.getText();
     if (document.languageId === "json") {
         return JSON.parser(fileContent);
     } else if (document.languageId === "yaml") {
         return YAML.parse(fileContent);
     } else if (document.languageId === "plaintext") {
-        fileContent = document.getText();
         if (fileContent.match(/^\s*[{[]/)) {
             return JSON.parser(fileContent);
         } else {
