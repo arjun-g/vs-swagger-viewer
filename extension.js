@@ -130,7 +130,7 @@ function activate(context) {
                         //console.log('Example app listening on port 3000!');
                         ios[fileName].on("connection", function (socket) {
                             socket.on("GET_INITIAL", function (data, fn) {
-                                fn(GetParsedFile(fileName, doc.getText()));
+                                fn(GetParsedFile(fileName, doc));
                             })
                         })
                         var previewSwagger = new PreviewSwagger(fileName);
@@ -173,15 +173,18 @@ function activate(context) {
     //context.subscriptions.push(...ds);
 }
 
-function GetParsedFile(fileName, fileContent) {
-    let extension = GetFilenameExtension(fileName);
-
-    if (extension == "json") {
-        return JSON.parse(fileContent);
-    }
-
-    if (extension == "yaml") {
+function GetParsedFile(fileName, document) {
+    if (document.languageId === "json") {
+        return JSON.parser(fileContent);
+    } else if (document.languageId === "yaml") {
         return YAML.parse(fileContent);
+    } else if (document.languageId === "plaintext") {
+        fileContent = document.getText();
+        if (fileContent.match(/^\s*[{[]/)) {
+            return JSON.parser(fileContent);
+        } else {
+            return YAML.parse(fileContent);
+        }
     }
 }
 
@@ -193,7 +196,7 @@ function PreviewSwagger(fileName) {
     var editor = vscode.window.activeTextEditor;
     var doc = editor.document;
     this.update = function () {
-        ios[fileName].emit("TEXT_UPDATE", GetParsedFile(fileName, doc.getText()));
+        ios[fileName].emit("TEXT_UPDATE", GetParsedFile(fileName, doc));
     }
     this.close = function () {
         servers[fileName].close();
@@ -206,7 +209,7 @@ function PreviewSwaggerController(swag) {
         var editor = vscode.window.activeTextEditor;
         if (!editor) { return; }
         var doc = editor.document;
-        if (doc.languageId === "yaml" || doc.languageId === "json") {
+        if (doc.languageId === "yaml" || doc.languageId === "json" || doc.languageId === "plaintext" ) {
             swag.update();
         } else {
             swag.close();
