@@ -174,7 +174,7 @@ function activate(context) {
 }
 
 function GetParsedFile(fileName, document) {
-    fileContent = document.getText();
+    var fileContent = document.getText();
     if (document.languageId === "json") {
         return JSON.parser(fileContent);
     } else if (document.languageId === "yaml") {
