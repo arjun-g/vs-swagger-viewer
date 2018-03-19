@@ -181,7 +181,7 @@ function GetParsedFile(fileName, document) {
         return YAML.parse(fileContent);
     } else if (document.languageId === "plaintext") {
         if (fileContent.match(/^\s*[{[]/)) {
-            return JSON.parser(fileContent);
+            return JSON.parse(fileContent);
         } else {
             return YAML.parse(fileContent);
         }
