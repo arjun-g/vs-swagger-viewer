@@ -1,4 +1,4 @@
-# Swagger Viewer - v1.5.0
+# Swagger Viewer - v1.6.0
 ## Swagger Viewer lets you preview swagger files as you type in Visual Studio Code.
 
 It works on swagger files in json and yaml format. Preview happens in real time as you type.
@@ -39,6 +39,9 @@ THEN
 ## Change Default Port
 
 Default port of the preview url can be changed by changing the `swaggerViewer.defaultPort` value in `User/Workspace Settings`
+
+v1.6.0 Changes
+* Added support for .yaml, .yml, .json and unsaved documents. - By [@DW8Reaper](https://github.com/DW8Reaper) [https://github.com/arjun-g/vs-swagger-viewer/pull/21](https://github.com/arjun-g/vs-swagger-viewer/pull/21)
 
 v1.5.0 Changes
 
