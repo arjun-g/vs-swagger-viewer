@@ -18,7 +18,8 @@
   ],
   "activationEvents": [
     "onLanguage:yaml",
-    "onLanguage:json"
+    "onLanguage:json",
+    "onLanguage:plaintext"
   ],
   "main": "./extension",
   "contributes": {
