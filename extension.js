@@ -94,7 +94,7 @@ function activate(context) {
         }
         var doc = editor.document;
         var fileName = doc.fileName.toLowerCase();
-        if (!servers[fileName]) {
+        if (!(servers[fileName] && servers[fileName].listening)) {
 
             // Display a message box to the user
             //vscode.window.showInformationMessage('Hello World!');
@@ -149,7 +149,7 @@ function activate(context) {
                     startServer(++defaultPort);
                 }
             }
-            startServer(defaultPort);
+            startServer(ports[fileName] || defaultPort);
         }
         else{
             if (openBrowser) {
