@@ -1,7 +1,9 @@
-# Swagger Viewer - v1.7.0
-## Swagger Viewer lets you preview swagger files as you type in Visual Studio Code.
+# Swagger Viewer - v2.0.0
+**Swagger Viewer lets you preview and validate Swagger 2.0 and OpenAPI files as you type in Visual Studio Code.**
 
-It works on swagger files in json and yaml format. Preview happens in real time as you type.
+It works on swagger files in json and yaml format. Preview and validation happens in real time as you type.
+
+## Preview
 
 To  start
 * Open the swagger file and press F1.
@@ -10,37 +12,52 @@ To  start
 OR
 * Press  `Shift + Alt + P`
 
+OR
+* Right click file in explorer panel and click `Preview Swagger`
+
 THEN
 
-* Preview It in the editor Itself like this
+* Preview it in vscode Itself like this
 
-![Swagger Preview](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/555c254d/docs/swagger-preview.gif)
+![Swagger Preview](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-preview.gif)
 
-## Opening In External browser
+![Swagger Context Menu](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-context-menu.png)
+
+### Opening In External browser
 
 If you want to preview the changes in external browser change the settings `swaggerViewer.previewInBrowser` to `true`
 
-![Swagger Settings](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/555c254d/docs/swagger-settings.png)
+![Swagger Settings](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-settings.png)
 
 THEN
-
 * Run the Command `Preview Swagger`.
 
 OR
 * Press  `Shift + Alt + P`
 
-THEN
+**Preview will be automatically opened in default browser.**
 
-* Either:
-    1. Copy the URL shown in the message box. (Eg. [https://localhost:9000/](https://localhost:9000/))
-        * Open in any latest browser and see your changes reflecting in real time as you type in the editor.
-    2. Click on `Open` to open the preview in your default browser.
-
-## Change Default Port
+### Change Default Port
 
 Default port of the preview url can be changed by changing the `swaggerViewer.defaultPort` value in `User/Workspace Settings`
 
+## Validation (Partial)
+
+Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specifications. If there are any issues it will be shown as a warning in the problems panel.
+
+![Swagger Validation](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-validation.png)
+
 ## Releases
+
+**v2.0.0 Changes**
+* Code base changed to TypeScript
+* Partial validation support added
+* OpenAPI Support added (Not fully tested)
+* Only one server runs for the preview page
+* Multiple files can be previewed at a time inside vscode
+* Context menu added to the explorer to start the preview directly without opening the file
+* Using files from swagger-ui-dist npm package - By [@Raptor399](https://github.com/Raptor399) [https://github.com/arjun-g/vs-swagger-viewer/pull/36](https://github.com/arjun-g/vs-swagger-viewer/pull/36)
+* Multiple minor bug fixes
 
 v1.7.0 Changes
 * Fixed issue in json file parsing. - By [@Zlass](https://github.com/Zlass) [https://github.com/arjun-g/vs-swagger-viewer/pull/27](https://github.com/arjun-g/vs-swagger-viewer/pull/27)
@@ -82,3 +99,6 @@ Swagger Viewer utilizes the following open source projects
 * [Vladimir Vainer (@ferreus)](https://github.com/ferreus)
 * [Jonatan Ienco (@jienco)](https://github.com/jienco)
 * [@tmsns](https://github.com/tmsns)
+* [@DW8Reaper](https://github.com/DW8Reaper)
+* [@Zlass](https://github.com/Zlass)
+* [@Raptor399](https://github.com/Raptor399)

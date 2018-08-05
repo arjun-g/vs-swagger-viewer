@@ -43,7 +43,8 @@ connection.onInitialize((params: InitializeParams) => {
 		capabilities: {
 			textDocumentSync: documents.syncKind,
 			completionProvider: {
-				resolveProvider: true
+				resolveProvider: true,
+				triggerCharacters: ['"', ':']
 			}
 		}
 	};
