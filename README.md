@@ -43,9 +43,13 @@ Default port of the preview url can be changed by changing the `swaggerViewer.de
 
 ## Validation (Partial)
 
-Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specifications. If there are any issues it will be shown as a warning in the problems panel.
+Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specifications. If there are any issues it will be shown as a warning in the problems panel. Right now only one validation error will be shown even if there are multiple issues.
 
 ![Swagger Validation](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-validation.png)
+
+## TODO
+* Show all the errors during validation
+* Add code complete support based on Swagger 2.0 and OpenAPI specifications
 
 ## Releases
 
@@ -90,6 +94,7 @@ v1.2.0 Changes
 ### Credits
 Swagger Viewer utilizes the following open source projects
 * [Swagger Editor](https://github.com/swagger-api/swagger-editor)
+* [Swagger Parser](https://github.com/BigstickCarpet/swagger-parser)
 * [Express](https://github.com/expressjs/express)
 * [socket.io](https://github.com/socketio/socket.io/)
 * [yaml.js](https://github.com/jeremyfa/yaml.js)

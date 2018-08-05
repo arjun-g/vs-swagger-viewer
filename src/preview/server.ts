@@ -44,7 +44,13 @@ export class PreviewServer {
 	private startServer(port){
 		this.currentPort = port;
 		try{
-			this.server.listen(SERVER_PORT, err => {
+			this.server
+			.once('error', (e: any) => {
+				if(e.code === 'EADDRINUSE'){
+					this.startServer(this.currentPort + 1);
+				}
+			})
+			.listen(this.currentPort, err => {
 				if(err) this.startServer(this.currentPort + 1);
 			});
 		}

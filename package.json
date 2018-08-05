@@ -1,14 +1,14 @@
 {
 	"name": "swagger-viewer",
 	"displayName": "Swagger Viewer",
-	"description": "Swagger Viewer lets you preview swagger files as you type in Visual Studio Code.",
+	"description": "Swagger Viewer lets you preview and validate Swagger 2.0 and OpenAPI files as you type in Visual Studio Code.",
 	"icon": "static/images/logo.png",
 	"galleryBanner": {
 		"color": "#4a4a4a",
 		"theme": "dark"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "1.7.0",
+	"version": "2.0.0",
 	"publisher": "Arjun",
 	"engines": {
 		"vscode": "^1.23.0"
