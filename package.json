@@ -8,7 +8,7 @@
 		"theme": "dark"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"publisher": "Arjun",
 	"engines": {
 		"vscode": "^1.23.0"

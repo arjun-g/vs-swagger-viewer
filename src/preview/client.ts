@@ -19,7 +19,7 @@ class InlinePreview implements vscode.TextDocumentContentProvider  {
 		this.disposable = vscode.workspace.registerTextDocumentContentProvider(`swagger-${fileHash}`, this);
 		vscode.commands.executeCommand('vscode.previewHtml', this.uri, vscode.ViewColumn.Two, `Swagger Preview - ${this.filename}`)
 		.then(_ => {
-			vscode.window.showErrorMessage('PREVIEW DONE');
+			
 		}, reason => {
 			vscode.window.showErrorMessage(reason);
 		});
