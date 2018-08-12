@@ -13,7 +13,7 @@ import {
 	TextDocumentPositionParams
 } from 'vscode-languageserver';
 import * as SwaggerParser from 'swagger-parser';
-import * as YAML from 'yamljs';
+import * as YAML from 'js-yaml';
 
 const SWAGGER_CODE_COMPLTE_DEFS = [
     /** TODO */
@@ -111,49 +111,12 @@ documents.onDidChangeContent(change => {
 function getParsedContent(document: TextDocument){
 	let fileContent = document.getText();
 	let fileObject: Object = null;
-	try{
-		if(fileContent.indexOf('swagger') >= 0 || fileContent.indexOf('openapi') >= 0){
-			if (document.languageId === "json") {
-				fileObject = JSON.parse(fileContent);
-			} else if (document.languageId === "yaml" || document.languageId === "yml") {
-				fileObject = YAML.parse(fileContent);
-			}
+	if(fileContent.indexOf('swagger') >= 0 || fileContent.indexOf('openapi') >= 0){
+		if (document.languageId === "json") {
+			fileObject = JSON.parse(fileContent);
+		} else if (document.languageId === "yaml" || document.languageId === "yml") {
+			fileObject = YAML.safeLoad(fileContent);// YAML.safeLoad(fileContent);
 		}
-	}
-	catch(err){
-		let diagnostics: Diagnostic[] = [];
-			let diagnostic: Diagnostic = {
-				severity: DiagnosticSeverity.Warning,
-				code: 0,
-				message: err.message,
-				range: {
-					start: {
-						line: 0,
-						character: 1
-					},
-					end: {
-						line: 0,
-						character: 1
-					}
-				},
-				source: "Swagger Viewer"
-			};
-
-			if (err.mark) {
-				diagnostic.range.start = diagnostic.range.end = {
-					line: err.mark.line,
-					character: err.mark.column
-				};
-			}
-
-			diagnostics.push(diagnostic);
-
-			connection.sendDiagnostics({
-				uri: document.uri,
-				diagnostics
-			});
-
-			connection.sendRequest("validated", err);
 	}
 	if(fileObject && typeof fileObject === 'object' && (fileObject.hasOwnProperty('swagger') || fileObject.hasOwnProperty('openapi'))){
 		return fileObject;
@@ -162,19 +125,55 @@ function getParsedContent(document: TextDocument){
 }
 
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
-	let swaggerObject = getParsedContent(textDocument);
+	let swaggerObject = null;
+	try{
+		swaggerObject = getParsedContent(textDocument);
+	}
+	catch(ex){
+		let diagnostics: Diagnostic[] = [];
+		let diagnostic: Diagnostic = {
+			severity: DiagnosticSeverity.Warning,
+			code: 0,
+			message: ex.message,
+			range: {
+				start: {
+					line: 0,
+					character: 1
+				},
+				end: {
+					line: 0,
+					character: 1
+				}
+			},
+			source: "Swagger Viewer Parse"
+		};
+
+		if (ex.mark) {
+			diagnostic.range.start = diagnostic.range.end = {
+				line: ex.mark.line,
+				character: ex.mark.column
+			};
+		}
+
+		diagnostics.push(diagnostic);
+
+		connection.sendDiagnostics({
+			uri: textDocument.uri,
+			diagnostics
+		});
+
+		return;
+	}
 	
 	if(!swaggerObject) return;
 
-	let obj = JSON.parse(textDocument.getText());
-	SwaggerParser.validate(obj)
+	SwaggerParser.validate(swaggerObject)
 		.then(api => {
 			let diagnostics: Diagnostic[] = [];
 			connection.sendDiagnostics({
 				uri: textDocument.uri,
 				diagnostics
 			});
-			connection.sendRequest("validated", null);
 		})
 		.catch(err => {
 			let diagnostics: Diagnostic[] = [];
@@ -209,7 +208,6 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 				diagnostics
 			});
 
-			connection.sendRequest("validated", err);
 		})
 
 }

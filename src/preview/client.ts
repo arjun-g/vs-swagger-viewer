@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as YAML from 'yamljs';
+import * as YAML from 'js-yaml';
 import * as SwaggerParser from 'swagger-parser';
 
 import { PreviewServer } from './server';
@@ -58,17 +58,21 @@ function hashString(str: string): string{
 
 function getParsedContent(document: vscode.TextDocument){
 	const fileContent = document.getText();
-	console.log('LANGUAGE', document.languageId)
-	if (document.languageId === "json") {
-		return JSON.parse(fileContent);
-	} else if (document.languageId === "yaml") {
-		return YAML.parse(fileContent);
-	} else if (document.languageId === "plaintext") {
-		if (fileContent.match(/^\s*[{[]/)) {
+	try{
+		if (document.languageId === "json") {
 			return JSON.parse(fileContent);
-		} else {
-			return YAML.parse(fileContent);
+		} else if (document.languageId === "yaml") {
+			return YAML.safeLoad(fileContent);
+		} else if (document.languageId === "plaintext") {
+			if (fileContent.match(/^\s*[{[]/)) {
+				return JSON.parse(fileContent);
+			} else {
+				return YAML.safeLoad(fileContent);
+			}
 		}
+	}
+	catch(ex){
+		return null;
 	}
 }
 

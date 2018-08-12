@@ -9,8 +9,18 @@
 			"args": ["--extensionDevelopmentPath=${workspaceRoot}" ],
 			"stopOnEntry": false,
 			"sourceMaps": true,
-			"outFiles": ["${workspaceRoot}/out/src/**/*.js"],
+			"outFiles": ["${workspaceRoot}/out/**/*.js"],
 			"preLaunchTask": "npm compile"
+		},
+		{
+			"type": "node",
+			"request": "attach",
+			"name": "Attach to Server",
+			"address": "localhost",
+			"protocol": "inspector",
+			"port": 6009,
+			"sourceMaps": true,
+			"outFiles": ["${workspaceRoot}/out/language/server.js"]
 		},
 		{
 			"name": "Launch Tests",

@@ -1,4 +1,4 @@
-# Swagger Viewer - v2.0.0
+# Swagger Viewer - v2.0.2
 **Swagger Viewer lets you preview and validate Swagger 2.0 and OpenAPI files as you type in Visual Studio Code.**
 
 It works on swagger files in json and yaml format. Preview and validation happens in real time as you type.
@@ -52,6 +52,10 @@ Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specific
 * Add code complete support based on Swagger 2.0 and OpenAPI specifications
 
 ## Releases
+
+**v2.0.2 Changes**
+* Fixed issues with parsing yaml due in yamljs library. Changed to js-yaml library.
+* Fixed issue where validation errors are not cleared in yaml file.
 
 **v2.0.0 Changes**
 * Code base changed to TypeScript
