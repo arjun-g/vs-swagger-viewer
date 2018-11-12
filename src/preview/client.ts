@@ -1,10 +1,9 @@
 import * as vscode from 'vscode';
 import * as YAML from 'js-yaml';
+import * as path from 'path';
 import * as SwaggerParser from 'swagger-parser';
 
 import { PreviewServer } from './server';
-
-const SHOULD_OPEN_BROWSER: boolean = !!vscode.workspace.getConfiguration('swaggerViewer').previewInBrowser || false;
 
 class InlinePreview implements vscode.TextDocumentContentProvider  {
 
@@ -14,18 +13,20 @@ class InlinePreview implements vscode.TextDocumentContentProvider  {
 	onDidChange?: vscode.Event<vscode.Uri>;
 
 	constructor(private previewUrl: string, private filename: string){
-		let fileHash = hashString(filename);
-		this.uri = vscode.Uri.parse(`swagger-${fileHash}://preview`);
-		this.disposable = vscode.workspace.registerTextDocumentContentProvider(`swagger-${fileHash}`, this);
-		vscode.commands.executeCommand('vscode.previewHtml', this.uri, vscode.ViewColumn.Two, `Swagger Preview - ${this.filename}`)
-		.then(_ => {
-			
-		}, reason => {
-			vscode.window.showErrorMessage(reason);
-		});
+		const showOnlyFileName: boolean = !!vscode.workspace.getConfiguration('swaggerViewer').showOnlyFileName;
+		const previewPanel = vscode.window.createWebviewPanel(
+			'swaggerPreview',
+			`Swagger Preview - ${showOnlyFileName ? path.basename(this.filename) : this.filename}`,
+			vscode.ViewColumn.Two,
+			{
+				enableScripts: true,
+				retainContextWhenHidden: true,
+			}
+		);
+		previewPanel.webview.html = this.provideTextDocumentContent();
 	}
 
-	provideTextDocumentContent(): vscode.ProviderResult<string> {
+	provideTextDocumentContent(): string {
 		return `
 			<html>
 				<body style="margin:0px;padding:0px;overflow:hidden">
@@ -88,7 +89,8 @@ export function activate(context: vscode.ExtensionContext){
 		let fileHash = hashString(fileName.toLowerCase());
 		let fileContent = getParsedContent(document);
 		previewServer.update(fileHash, fileContent);
-		if(SHOULD_OPEN_BROWSER){
+		const previewInBrowser: boolean = !!vscode.workspace.getConfiguration('swaggerViewer').previewInBrowser;
+		if(previewInBrowser){
 			new BrowserPreview(previewServer.getUrl(fileHash), fileName);
 		}
 		else{

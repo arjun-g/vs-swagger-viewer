@@ -56,6 +56,11 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Whether to open preview in browser, default: preview inside vscode"
+				},
+				"swaggerViewer.showOnlyFileName": {
+					"type": "boolean",
+					"default": false,
+					"description": "Whether to show only the filename in the preview title, default: show filename along with path"
 				}
 			}
 		},
