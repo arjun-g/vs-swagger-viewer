@@ -1,4 +1,4 @@
-# Swagger Viewer - v2.0.2
+# Swagger Viewer - v2.1.0
 **Swagger Viewer lets you preview and validate Swagger 2.0 and OpenAPI files as you type in Visual Studio Code.**
 
 It works on swagger files in json and yaml format. Preview and validation happens in real time as you type.
@@ -19,15 +19,17 @@ THEN
 
 * Preview it in vscode Itself like this
 
-![Swagger Preview](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-preview.gif)
+![Swagger Preview](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/swagger-preview.gif)
 
-![Swagger Context Menu](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-context-menu.png)
+![Swagger Context Menu](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/swagger-context-menu.png)
+
+## Configurations
+
+![Swagger Settings](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/swagger-settings.png)
 
 ### Opening In External browser
 
-If you want to preview the changes in external browser change the settings `swaggerViewer.previewInBrowser` to `true`
-
-![Swagger Settings](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-settings.png)
+If you want to preview the changes in external browser change the settings `Preview In Browser` to `true` in `User/Workspace Settings`
 
 THEN
 * Run the Command `Preview Swagger`.
@@ -39,19 +41,28 @@ OR
 
 ### Change Default Port
 
-Default port of the preview url can be changed by changing the `swaggerViewer.defaultPort` value in `User/Workspace Settings`
+Default port of the preview url can be changed by changing the `Default Port` value in `User/Workspace Settings`
+
+### Show Only File Name
+
+In the preview title the file name along with the full path is displayed by default. It can be changed to show only the file name by changing the `Show Only File Name` to `true` in `User/Workspace Settings`
 
 ## Validation (Partial)
 
 Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specifications. If there are any issues it will be shown as a warning in the problems panel. Right now only one validation error will be shown even if there are multiple issues.
 
-![Swagger Validation](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/2.0.0/docs/swagger-validation.png)
+![Swagger Validation](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/swagger-validation.png)
 
 ## TODO
 * Show all the errors during validation
 * Add code complete support based on Swagger 2.0 and OpenAPI specifications
 
 ## Releases
+
+**v2.1.0 Changes**
+* Replaced the deprecated `vscode.previewHtml` with Webview - [#50](https://github.com/arjun-g/vs-swagger-viewer/issues/50)
+* Added configuration option to show only file name in title
+* Added support for OpenAPI 3.0.3 validation - By [@ackintosh](https://github.com/ackintosh) [https://github.com/arjun-g/vs-swagger-viewer/pull/49](https://github.com/arjun-g/vs-swagger-viewer/pull/49)
 
 **v2.0.2 Changes**
 * Fixed issues with parsing yaml due in yamljs library. Changed to js-yaml library.
@@ -111,3 +122,4 @@ Swagger Viewer utilizes the following open source projects
 * [@DW8Reaper](https://github.com/DW8Reaper)
 * [@Zlass](https://github.com/Zlass)
 * [@Raptor399](https://github.com/Raptor399)
+* [@ackintosh](https://github.com/ackintosh)
