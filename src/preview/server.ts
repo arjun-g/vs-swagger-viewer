@@ -5,12 +5,15 @@ import * as express from 'express';
 import * as http from 'http';
 import * as socketio from 'socket.io';
 
+const SERVER_HOST = vscode.workspace.getConfiguration('swaggerViewer').defaultHost || 'localhost';
+
 const SERVER_PORT = vscode.workspace.getConfiguration('swaggerViewer').defaultPort || 9000;
 
 const FILE_CONTENT: { [key: string]: any } = {};
 
 export class PreviewServer {
 
+	currentHost: string = SERVER_HOST
 	currentPort: number = SERVER_PORT
 	io: socketio.Server
 	server: http.Server
@@ -65,7 +68,7 @@ export class PreviewServer {
 	}
 
 	getUrl(fileHash: string): string {
-		return `http://localhost:${this.currentPort}/${fileHash}`;
+		return `http://${this.currentHost}:${this.currentPort}/${fileHash}`;
 	}
 
 	stop(){

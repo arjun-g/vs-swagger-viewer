@@ -41,6 +41,10 @@ OR
 
 Default port of the preview url can be changed by changing the `swaggerViewer.defaultPort` value in `User/Workspace Settings`
 
+### Change Default Host
+
+Default host(localhost) of the preview url can be changed by changing the `swaggerViewer.defaultHost` value in `User/Workspace Settings`
+
 ## Validation (Partial)
 
 Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specifications. If there are any issues it will be shown as a warning in the problems panel. Right now only one validation error will be shown even if there are multiple issues.

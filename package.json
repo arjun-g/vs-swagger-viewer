@@ -39,6 +39,11 @@
 			"type": "object",
 			"title": "Swagger Viewer configuration",
 			"properties": {
+				"swaggerViewer.defaultHost": {
+					"type": "string",
+					"default": "localhost",
+					"description": "Default host in which the preview should be opened."
+				},
 				"swaggerViewer.defaultPort": {
 					"type": "integer",
 					"default": 9000,
