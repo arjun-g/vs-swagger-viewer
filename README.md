@@ -63,6 +63,12 @@ Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specific
 
 ## Releases
 
+**v2.2.1 Changes**
+* Fixed the external refs issue #45
+
+Known Issue
+* Validator still gives a warning on relative paths. Will be fixed in next version.
+
 **v2.2.0 Changes**
 * Support to configure default preview host (instead of localhost) - By [@beastoin](https://github.com/beastoin) [https://github.com/arjun-g/vs-swagger-viewer/pull/41](https://github.com/arjun-g/vs-swagger-viewer/pull/41)
 

@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import * as express from 'express';
 import * as http from 'http';
 import * as socketio from 'socket.io';
+import * as SwaggerParser from 'swagger-parser';
 
 const SERVER_HOST = vscode.workspace.getConfiguration('swaggerViewer').defaultHost || 'localhost';
 
@@ -62,8 +63,10 @@ export class PreviewServer {
 		}
 	}
 
-	update(fileHash:string, content: any){
-		FILE_CONTENT[fileHash] = content;
+	async update(filePath: string, fileHash:string, content: any){
+		FILE_CONTENT[fileHash] = await SwaggerParser.bundle(filePath, content, {
+
+		} as any);
 		this.io.to(fileHash).emit('TEXT_UPDATE', content);
 	}
 

@@ -8,7 +8,7 @@
 		"theme": "dark"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"publisher": "Arjun",
 	"engines": {
 		"vscode": "^1.23.0"
@@ -102,8 +102,8 @@
 		"@types/js-yaml": "^3.11.2",
 		"@types/node": "^10.5.5",
 		"@types/socket.io": "^1.4.36",
-		"@types/swagger-parser": "^4.0.2",
-		"typescript": "^2.8.3"
+		"@types/swagger-parser": "^4.0.3",
+		"typescript": "^3.3.4000"
 	},
 	"dependencies": {
 		"express": "^4.16.3",

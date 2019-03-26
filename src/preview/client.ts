@@ -88,7 +88,7 @@ export function activate(context: vscode.ExtensionContext){
 		let fileName = document.fileName;
 		let fileHash = hashString(fileName.toLowerCase());
 		let fileContent = getParsedContent(document);
-		previewServer.update(fileHash, fileContent);
+		previewServer.update(fileName, fileHash, fileContent);
 		const previewInBrowser: boolean = !!vscode.workspace.getConfiguration('swaggerViewer').previewInBrowser;
 		if(previewInBrowser){
 			new BrowserPreview(previewServer.getUrl(fileHash), fileName);
@@ -102,7 +102,7 @@ export function activate(context: vscode.ExtensionContext){
 		if (e.document === vscode.window.activeTextEditor.document) {
 			let fileName = e.document.fileName;
 			let fileHash = hashString(fileName.toLowerCase());
-			previewServer.update(fileHash, getParsedContent(e.document));
+			previewServer.update(fileName, fileHash, getParsedContent(e.document));
 		}
 	});
 	context.subscriptions.push(disposable);
