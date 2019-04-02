@@ -10,7 +10,8 @@ import {
 	DidChangeConfigurationNotification,
 	CompletionItem,
 	CompletionItemKind,
-	TextDocumentPositionParams
+	TextDocumentPositionParams,
+	Files
 } from 'vscode-languageserver';
 import * as SwaggerParser from 'swagger-parser';
 import * as YAML from 'js-yaml';
@@ -124,92 +125,75 @@ function getParsedContent(document: TextDocument){
 	return null;
 }
 
+function sendErrorDiagnostic(error: any, textDocument: TextDocument, source: string){
+	let diagnostics: Diagnostic[] = [];
+	let diagnostic: Diagnostic = {
+		severity: DiagnosticSeverity.Warning,
+		code: 0,
+		message: error.message,
+		range: {
+			start: {
+				line: 0,
+				character: 1
+			},
+			end: {
+				line: 0,
+				character: 1
+			}
+		},
+		source: source
+	};
+
+	if (error.mark) {
+		diagnostic.range.start = diagnostic.range.end = {
+			line: error.mark.line,
+			character: error.mark.column
+		};
+	}
+
+	diagnostics.push(diagnostic);
+
+	connection.sendDiagnostics({
+		uri: textDocument.uri,
+		diagnostics
+	});
+}
+
+function validateSwagger(swagger: any, textDocument: TextDocument) {
+	SwaggerParser.validate(swagger)
+	.then(() => {
+		const diagnostics: Diagnostic[] = [];
+		connection.sendDiagnostics({
+			uri: textDocument.uri,
+			diagnostics
+		});
+	})
+	.catch(error => {
+		sendErrorDiagnostic(error, textDocument, "Swagger Viewer");
+	});
+}
+
+function changeCurrentWorkDir(textDocument: TextDocument): void {
+	const documentPath = Files.uriToFilePath(textDocument.uri);
+	const documentDir = documentPath.substr(0, documentPath.lastIndexOf('/'));
+	// work dir == document base dir
+	process.chdir(documentDir);
+}
+
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 	let swaggerObject = null;
 	try{
 		swaggerObject = getParsedContent(textDocument);
 	}
 	catch(ex){
-		let diagnostics: Diagnostic[] = [];
-		let diagnostic: Diagnostic = {
-			severity: DiagnosticSeverity.Warning,
-			code: 0,
-			message: ex.message,
-			range: {
-				start: {
-					line: 0,
-					character: 1
-				},
-				end: {
-					line: 0,
-					character: 1
-				}
-			},
-			source: "Swagger Viewer Parse"
-		};
-
-		if (ex.mark) {
-			diagnostic.range.start = diagnostic.range.end = {
-				line: ex.mark.line,
-				character: ex.mark.column
-			};
-		}
-
-		diagnostics.push(diagnostic);
-
-		connection.sendDiagnostics({
-			uri: textDocument.uri,
-			diagnostics
-		});
-
-		return;
+		sendErrorDiagnostic(ex, textDocument, "Swagger Viewer Parse");
 	}
 	
 	if(!swaggerObject) return;
 
-	SwaggerParser.validate(swaggerObject)
-		.then(api => {
-			let diagnostics: Diagnostic[] = [];
-			connection.sendDiagnostics({
-				uri: textDocument.uri,
-				diagnostics
-			});
-		})
-		.catch(err => {
-			let diagnostics: Diagnostic[] = [];
-			let diagnostic: Diagnostic = {
-				severity: DiagnosticSeverity.Warning,
-				code: 0,
-				message: err.message,
-				range: {
-					start: {
-						line: 0,
-						character: 1
-					},
-					end: {
-						line: 0,
-						character: 1
-					}
-				},
-				source: "Swagger Viewer"
-			};
+	changeCurrentWorkDir(textDocument);
 
-			if (err.mark) {
-				diagnostic.range.start = diagnostic.range.end = {
-					line: err.mark.line,
-					character: err.mark.column
-				};
-			}
-
-			diagnostics.push(diagnostic);
-
-			connection.sendDiagnostics({
-				uri: textDocument.uri,
-				diagnostics
-			});
-
-		})
-
+	validateSwagger(swaggerObject, textDocument);
 }
 
 connection.onDidChangeWatchedFiles(_change => {
