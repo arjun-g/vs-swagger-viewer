@@ -32,6 +32,7 @@ export class PreviewServer {
 		this.server = http.createServer(app);
 		this.io = socketio(this.server);
 
+		app.set('host', SERVER_HOST);
 		app.set('port', SERVER_PORT);
 
 		this.startServer(this.currentPort);
@@ -47,18 +48,24 @@ export class PreviewServer {
 
 	private startServer(port){
 		this.currentPort = port;
+		console.log(`[swagger viewer] start server listening on ${this.currentHost}:${this.currentPort}`)
 		try{
 			this.server
 			.once('error', (e: any) => {
+				console.error(`[swagger viewer] failed to start server listening on ${this.currentHost}:${this.currentPort}`, e);
 				if(e.code === 'EADDRINUSE'){
 					this.startServer(this.currentPort + 1);
 				}
 			})
-			.listen(this.currentPort, err => {
-				if(err) this.startServer(this.currentPort + 1);
+			.listen(this.currentPort, this.currentHost, err => {
+				if(err){
+					console.error(`[swagger viewer] failed to start server listening on ${this.currentHost}:${this.currentPort}`, err);
+					this.startServer(this.currentPort + 1);
+				}
 			});
 		}
 		catch(err){
+			console.error(`[swagger viewer] failed to start server listening on ${this.currentHost}:${this.currentPort}`, err);
 			this.startServer(this.currentPort + 1);
 		}
 	}
