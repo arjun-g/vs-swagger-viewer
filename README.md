@@ -1,4 +1,4 @@
-# Swagger Viewer - v2.2.0
+# Swagger Viewer - v2.2.2
 **Swagger Viewer lets you preview and validate Swagger 2.0 and OpenAPI files as you type in Visual Studio Code.**
 
 It works on swagger files in json and yaml format. Preview and validation happens in real time as you type.
@@ -59,12 +59,16 @@ Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specific
 
 ## TODO
 * Show all the errors during validation
-* Add code complete support based on Swagger 2.0 and OpenAPI specifications
+* Add code completion support based on Swagger 2.0 and OpenAPI specifications
 
 ## Releases
 
+**v2.2.2 Changes**
+* Fixed validation issue with external refs [#45](https://github.com/arjun-g/vs-swagger-viewer/issues/45) By [@yuri1969](https://github.com/yuri1969) [https://github.com/arjun-g/vs-swagger-viewer/pull/56](https://github.com/arjun-g/vs-swagger-viewer/pull/56)
+* Fix for [#43](https://github.com/arjun-g/vs-swagger-viewer/issues/43) By [@joschiwald](https://github.com/joschiwald) [https://github.com/arjun-g/vs-swagger-viewer/pull/59](https://github.com/arjun-g/vs-swagger-viewer/pull/59)
+
 **v2.2.1 Changes**
-* Fixed the external refs issue #45
+* Fixed the external refs issue [#45](https://github.com/arjun-g/vs-swagger-viewer/issues/45)
 
 Known Issue
 * Validator still gives a warning on relative paths. Will be fixed in next version.

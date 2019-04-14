@@ -8,7 +8,7 @@
 		"theme": "dark"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"publisher": "Arjun",
 	"engines": {
 		"vscode": "^1.25.0"
@@ -113,7 +113,7 @@
 		"swagger-parser": "^6.0.5",
 		"swagger-ui-dist": "^3.22.0",
 		"vscode-languageclient": "^4.1.4",
-		"vscode-languageserver": "^4.1.3"
+		"vscode-languageserver": "^4.4.2"
 	},
 	"bugs": {
 		"url": "https://github.com/arjun-g/vs-swagger-viewer/issues"

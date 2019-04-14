@@ -15,6 +15,7 @@ import {
 } from 'vscode-languageserver';
 import * as SwaggerParser from 'swagger-parser';
 import * as YAML from 'js-yaml';
+import * as path from 'path';
 
 const SWAGGER_CODE_COMPLTE_DEFS = [
     /** TODO */
@@ -175,7 +176,7 @@ function validateSwagger(swagger: any, textDocument: TextDocument) {
 
 function changeCurrentWorkDir(textDocument: TextDocument): void {
 	const documentPath = Files.uriToFilePath(textDocument.uri);
-	const documentDir = documentPath.substr(0, documentPath.lastIndexOf('/'));
+	const documentDir = path.dirname(documentPath);
 	// work dir == document base dir
 	process.chdir(documentDir);
 }
