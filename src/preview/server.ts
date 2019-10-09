@@ -8,7 +8,7 @@ import * as SwaggerParser from 'swagger-parser';
 
 const SERVER_HOST = vscode.workspace.getConfiguration('swaggerViewer').defaultHost || 'localhost';
 
-const SERVER_PORT = vscode.workspace.getConfiguration('swaggerViewer').defaultPort || 9000;
+const SERVER_PORT = vscode.workspace.getConfiguration('swaggerViewer').defaultPort || 15870;
 
 const FILE_CONTENT: { [key: string]: any } = {};
 
