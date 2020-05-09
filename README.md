@@ -1,7 +1,7 @@
 [![Marketplace Version](https://vsmarketplacebadge.apphb.com/version/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer) [![Marketplace Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
 
 # Swagger Viewer - v3.0.0
-**Swagger Viewer lets you preview Swagger 2.0 and OpenAPI files as you type in Visual Studio Code. Additionally provide intellisense for the files as well.**
+**Swagger Viewer lets you preview Swagger 2.0 and OpenAPI files as you type in Visual Studio Code. Additionally provide intellisense/linting for the files as well.**
 
 It works on swagger files in json and yaml format. Preview happens in real time as you type.
 
@@ -63,8 +63,8 @@ To stop the preview server simply click the status bar item.
 
 **v3.0.0 Changes**
 * The primary functionality of the Swagger Viewer extension would be the ability to preview Swagger and OpenAPI files.
-* Swagger Viewer will no longer be handling validation. Recommend using [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) for full editing capabilities
-* Intellisense for Swagger 2.0 and OpenAPI 3.0 is available now. Added extension [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) as **extensionDependencies** for YAML intellisense.
+* Swagger Viewer will just use the json schema of Swagger and OpenAPI to provide intellisense and linting. Recommend using teh extension [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) for full editing capabilities.
+* Intellisense for Swagger 2.0 and OpenAPI 3.0 is available now. Added extension [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) as **extensionDependencies** for supporting YAML intellisense.
 * Default port changed to **18512**
 * Upgraded swagger-ui to version **3.25.2**
 * Start preview server in next available port for preview if configured port is not available
