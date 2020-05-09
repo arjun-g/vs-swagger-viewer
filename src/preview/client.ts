@@ -94,7 +94,6 @@ export async function activate(context: vscode.ExtensionContext) {
     redhatExtension.exports.registerContributor(
       "swaggerviewer",
       (uri) => {
-        console.log("PARSING URI", uri);
         for (let document of vscode.workspace.textDocuments) {
           if (document.uri.toString() === uri) {
             const parsedYAML = YAML.safeLoad(document.getText());

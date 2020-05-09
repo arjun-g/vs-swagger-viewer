@@ -11,7 +11,7 @@ const SERVER_HOST =
   vscode.workspace.getConfiguration("swaggerViewer").defaultHost || "localhost";
 
 const SERVER_PORT =
-  vscode.workspace.getConfiguration("swaggerViewer").defaultPort || 8512;
+  vscode.workspace.getConfiguration("swaggerViewer").defaultPort || 18512;
 
 const FILE_CONTENT: { [key: string]: any } = {};
 

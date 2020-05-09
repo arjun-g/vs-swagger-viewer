@@ -5,13 +5,13 @@
          "if": {
             "properties": { "swagger": { "const": "2.0" } }
          },
-         "then":  {"$ref": "./src/schemas/swagger.json" }
+         "then":  {"$ref": "./out/schemas/swagger.json" }
        },
        "openapi": {
          "if": {
             "properties": { "openapi": { "pattern": "^3\\.0\\.\\d(-.+)?$" } }
          },
-         "then":  {"$ref": "./src/schemas/openapi.json" }
+         "then":  {"$ref": "./out/schemas/openapi.json" }
        }
      }
    }

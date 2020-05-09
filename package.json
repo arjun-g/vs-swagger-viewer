@@ -8,7 +8,7 @@
 		"theme": "dark"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "2.2.2",
+	"version": "3.0.0",
 	"publisher": "Arjun",
 	"engines": {
 		"vscode": "^1.34.0"
@@ -35,9 +35,7 @@
 	"main": "./out/index",
 	"scripts": {
 		"vscode:prepublish": "tsc -p ./",
-		"compile": "tsc -watch -p ./",
-		"update-vscode": "node ./node_modules/vscode/bin/install",
-		"postinstall": "node ./node_modules/vscode/bin/install"
+		"compile": "tsc -watch -p ./"
 	},
 	"contributes": {
 		"commands": [
@@ -57,7 +55,7 @@
 				},
 				"swaggerViewer.defaultPort": {
 					"type": "integer",
-					"default": 8512,
+					"default": 18512,
 					"description": "Default port in which the preview should be opened."
 				},
 				"swaggerViewer.previewInBrowser": {
