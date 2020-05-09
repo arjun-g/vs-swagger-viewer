@@ -76,7 +76,7 @@ export class PreviewServer {
       );
       this.io && this.io.to(fileHash).emit("TEXT_UPDATE", content);
     } catch (err) {
-      console.log("Unable To Parse", err);
+      
     }
   }
 
