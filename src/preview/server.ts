@@ -1,81 +1,91 @@
-import * as path from 'path';
-import * as fs from 'fs';
-import * as vscode from 'vscode';
-import * as express from 'express';
-import * as http from 'http';
-import * as socketio from 'socket.io';
-import * as SwaggerParser from 'swagger-parser';
+import * as path from "path";
+import * as fs from "fs";
+import * as vscode from "vscode";
+import * as express from "express";
+import * as http from "http";
+import * as socketio from "socket.io";
+import * as SwaggerParser from "swagger-parser";
+import { getPortPromise } from "portfinder";
 
-const SERVER_HOST = vscode.workspace.getConfiguration('swaggerViewer').defaultHost || 'localhost';
+const SERVER_HOST =
+  vscode.workspace.getConfiguration("swaggerViewer").defaultHost || "localhost";
 
-const SERVER_PORT = vscode.workspace.getConfiguration('swaggerViewer').defaultPort || 9000;
+const SERVER_PORT =
+  vscode.workspace.getConfiguration("swaggerViewer").defaultPort || 8512;
 
 const FILE_CONTENT: { [key: string]: any } = {};
 
 export class PreviewServer {
+  currentHost: string = SERVER_HOST;
+  currentPort: number = SERVER_PORT;
+  io: socketio.Server;
+  server: http.Server;
 
-	currentHost: string = SERVER_HOST
-	currentPort: number = SERVER_PORT
-	io: socketio.Server
-	server: http.Server
+  serverRunning: boolean = false;
 
-	constructor(){
-		const app = express();
-		app.use(express.static(path.join(__dirname, '..', '..', 'static')));
-		app.use('/node_modules', express.static(path.join(__dirname, '..', '..', 'node_modules')));
-		app.use('/:fileHash', (req, res) => {
-			let htmlContent = fs.readFileSync(path.join(__dirname, '..', '..', 'static', 'index.html')).toString('utf-8').replace('%FILE_HASH%', req.params.fileHash);
-			res.setHeader('Content-Type', 'text/html');
-			res.send(htmlContent);
-		});
+  constructor() {}
 
-		this.server = http.createServer(app);
-		this.io = socketio(this.server);
+  public async initiateServer() {
+    if (this.serverRunning) return;
+    this.currentPort = await getPortPromise({ port: this.currentPort });
+    const app = express();
+    app.use(express.static(path.join(__dirname, "..", "..", "static")));
+    app.use(
+      "/node_modules",
+      express.static(path.join(__dirname, "..", "..", "node_modules"))
+    );
+    app.use("/:fileHash", (req, res) => {
+      let htmlContent = fs
+        .readFileSync(path.join(__dirname, "..", "..", "static", "index.html"))
+        .toString("utf-8")
+        .replace("%FILE_HASH%", req.params.fileHash);
+      res.setHeader("Content-Type", "text/html");
+      res.send(htmlContent);
+    });
 
-		app.set('port', SERVER_PORT);
+    this.server = http.createServer(app);
+    this.io = socketio(this.server);
 
-		this.startServer(this.currentPort);
+    app.set("port", this.currentPort);
 
-		this.io.on('connection', (socket) => {
-			socket.on("GET_INITIAL", function (data, fn) {
-				let fileHash = data.fileHash;
-				socket.join(fileHash);
-				fn(FILE_CONTENT[fileHash]);
-			});
-		});
-	}
+    this.startServer(this.currentPort);
 
-	private startServer(port){
-		this.currentPort = port;
-		try{
-			this.server
-			.once('error', (e: any) => {
-				if(e.code === 'EADDRINUSE'){
-					this.startServer(this.currentPort + 1);
-				}
-			})
-			.listen(this.currentPort, err => {
-				if(err) this.startServer(this.currentPort + 1);
-			});
-		}
-		catch(err){
-			this.startServer(this.currentPort + 1);
-		}
-	}
+    this.io.on("connection", (socket) => {
+      socket.on("GET_INITIAL", function (data, fn) {
+        let fileHash = data.fileHash;
+        socket.join(fileHash);
+        fn(FILE_CONTENT[fileHash]);
+      });
+    });
+  }
 
-	async update(filePath: string, fileHash:string, content: any){
-		FILE_CONTENT[fileHash] = await SwaggerParser.bundle(filePath, content, {
+  private startServer(port) {
+    this.currentPort = port;
+    this.server.listen(this.currentPort, () => {
+      this.serverRunning = true;
+    });
+  }
 
-		} as any);
-		this.io.to(fileHash).emit('TEXT_UPDATE', content);
-	}
+  async update(filePath: string, fileHash: string, content: any) {
+    try {
+      FILE_CONTENT[fileHash] = await SwaggerParser.bundle(
+        filePath,
+        content,
+        {} as any
+      );
+      this.io && this.io.to(fileHash).emit("TEXT_UPDATE", content);
+    } catch (err) {
+      console.log("Unable To Parse", err);
+    }
+  }
 
-	getUrl(fileHash: string): string {
-		return `http://${this.currentHost}:${this.currentPort}/${fileHash}`;
-	}
+  getUrl(fileHash: string): string {
+    return `http://${this.currentHost}:${this.currentPort}/${fileHash}`;
+  }
 
-	stop(){
-		this.server.close();
-	}
-
+  stop() {
+    this.server.close();
+    this.server = null;
+    this.serverRunning = false;
+  }
 }
