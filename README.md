@@ -57,11 +57,12 @@ Default host(localhost) of the preview url can be changed by changing the `swagg
 
 To stop the preview server simply click the status bar item.
 
-![Stop Swagger Server](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/stop-swagger.png)
+![Stop Swagger Server](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/stop-swagger-preview-server.png)
 
 ## Releases
 
 **v3.0.0 Changes**
+* The primary functionality of the Swagger Viewer extension would be the ability to preview Swagger and OpenAPI files.
 * Swagger Viewer will no longer be handling validation. Recommend using [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) for full editing capabilities
 * Intellisense for Swagger 2.0 and OpenAPI 3.0 is available now. Added extension [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) as **extensionDependencies** for YAML intellisense.
 * Default port changed to **18512**
