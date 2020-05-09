@@ -1,12 +1,9 @@
-import * as PreviewClient from './preview/client';
-import * as LanguageClient from './language/client';
+import * as PreviewClient from "./preview/client";
 
 export function activate(context) {
-	PreviewClient.activate(context);
-	LanguageClient.activate(context);
+  PreviewClient.activate(context);
 }
 
-export function deactivate(){
-	PreviewClient.deactivate();
-	LanguageClient.deactivate();
+export function deactivate() {
+  PreviewClient.deactivate();
 }

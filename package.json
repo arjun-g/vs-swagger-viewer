@@ -8,11 +8,14 @@
 		"theme": "dark"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "2.2.2",
+	"version": "3.0.0",
 	"publisher": "Arjun",
 	"engines": {
-		"vscode": "^1.25.0"
+		"vscode": "^1.34.0"
 	},
+	"extensionDependencies": [
+		"redhat.vscode-yaml"
+	],
 	"categories": [
 		"Other"
 	],
@@ -32,14 +35,12 @@
 	"main": "./out/index",
 	"scripts": {
 		"vscode:prepublish": "tsc -p ./",
-		"compile": "tsc -watch -p ./",
-		"update-vscode": "node ./node_modules/vscode/bin/install",
-		"postinstall": "node ./node_modules/vscode/bin/install"
+		"compile": "tsc -watch -p ./"
 	},
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.previewSwagger",
+				"command": "swagger.preview",
 				"title": "Preview Swagger"
 			}
 		],
@@ -54,7 +55,7 @@
 				},
 				"swaggerViewer.defaultPort": {
 					"type": "integer",
-					"default": 9000,
+					"default": 18512,
 					"description": "Default port in which the preview should be opened."
 				},
 				"swaggerViewer.previewInBrowser": {
@@ -71,7 +72,7 @@
 		},
 		"keybindings": [
 			{
-				"command": "extension.previewSwagger",
+				"command": "swagger.preview",
 				"key": "shift+alt+p",
 				"mac": "shift+alt+p",
 				"when": "editorTextFocus"
@@ -81,39 +82,44 @@
 			"explorer/context": [
 				{
 					"when": "resourceLangId == json",
-					"command": "extension.previewSwagger",
+					"command": "swagger.preview",
 					"group": "SwaggerViewer"
 				},
 				{
 					"when": "resourceLangId == yaml",
-					"command": "extension.previewSwagger",
+					"command": "swagger.preview",
 					"group": "SwaggerViewer"
 				},
 				{
 					"when": "resourceLangId == yml",
-					"command": "extension.previewSwagger",
+					"command": "swagger.preview",
 					"group": "SwaggerViewer"
 				}
 			]
-		}
+		},
+		"jsonValidation": [
+			{
+				"fileMatch": "*.json",
+				"url": "./schema.json"
+			}
+		]
 	},
 	"devDependencies": {
-		"@types/express": "^4.16.0",
-		"@types/js-yaml": "^3.11.2",
-		"@types/node": "^10.5.5",
-		"@types/socket.io": "^1.4.36",
-		"@types/swagger-parser": "^4.0.3",
-		"typescript": "^3.3.4000",
-		"vscode": "^1.1.18"
+		"@types/express": "^4.17.6",
+		"@types/js-yaml": "^3.12.3",
+		"@types/node": "^13.13.5",
+		"@types/socket.io": "^2.1.4",
+		"@types/swagger-parser": "^7.0.1",
+		"@types/vscode": "^1.34.0",
+		"typescript": "^3.8.3"
 	},
 	"dependencies": {
-		"express": "^4.16.3",
-		"js-yaml": "^3.12.0",
-		"socket.io": "^2.1.1",
+		"express": "^4.17.1",
+		"js-yaml": "^3.13.1",
+		"portfinder": "^1.0.26",
+		"socket.io": "^2.3.0",
 		"swagger-parser": "^9.0.1",
-		"swagger-ui-dist": "^3.25.0",
-		"vscode-languageclient": "^4.1.4",
-		"vscode-languageserver": "^4.4.2"
+		"swagger-ui-dist": "^3.25.2"
 	},
 	"bugs": {
 		"url": "https://github.com/arjun-g/vs-swagger-viewer/issues"

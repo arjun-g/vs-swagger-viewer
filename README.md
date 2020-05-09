@@ -1,7 +1,9 @@
-# Swagger Viewer - v2.2.2
-**Swagger Viewer lets you preview and validate Swagger 2.0 and OpenAPI files as you type in Visual Studio Code.**
+[![Marketplace Version](https://vsmarketplacebadge.apphb.com/version/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer) [![Marketplace Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
 
-It works on swagger files in json and yaml format. Preview and validation happens in real time as you type.
+# Swagger Viewer - v3.0.0
+**Swagger Viewer lets you preview Swagger 2.0 and OpenAPI files as you type in Visual Studio Code. Additionally provide intellisense for the files as well.**
+
+It works on swagger files in json and yaml format. Preview happens in real time as you type.
 
 ## Preview
 
@@ -51,17 +53,22 @@ In the preview title the file name along with the full path is displayed by defa
 
 Default host(localhost) of the preview url can be changed by changing the `swaggerViewer.defaultHost` value in `User/Workspace Settings`
 
-## Validation (Partial)
+### Stop Swagger Viewer Preview Server
 
-Swagger Viewer validates your documents against Swagger 2.0 and OpenAPI specifications. If there are any issues it will be shown as a warning in the problems panel. Right now only one validation error will be shown even if there are multiple issues.
+To stop the preview server simply click the status bar item.
 
-![Swagger Validation](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/swagger-validation.png)
-
-## TODO
-* Show all the errors during validation
-* Add code completion support based on Swagger 2.0 and OpenAPI specifications
+![Stop Swagger Server](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/stop-swagger.png)
 
 ## Releases
+
+**v3.0.0 Changes**
+* Swagger Viewer will no longer be handling validation. Recommend using [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) for full editing capabilities
+* Intellisense for Swagger 2.0 and OpenAPI 3.0 is available now. Added extension [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) as **extensionDependencies** for YAML intellisense.
+* Default port changed to **18512**
+* Upgraded swagger-ui to version **3.25.2**
+* Start preview server in next available port for preview if configured port is not available
+* Fix for custom host config
+* Ability to stop the preview server
 
 **v2.2.2 Changes**
 * Fixed validation issue with external refs [#45](https://github.com/arjun-g/vs-swagger-viewer/issues/45) By [@yuri1969](https://github.com/yuri1969) [https://github.com/arjun-g/vs-swagger-viewer/pull/56](https://github.com/arjun-g/vs-swagger-viewer/pull/56)
