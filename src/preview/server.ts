@@ -7,16 +7,13 @@ import * as socketio from "socket.io";
 import * as SwaggerParser from "swagger-parser";
 import { getPortPromise } from "portfinder";
 
-const SERVER_HOST =
-  vscode.workspace.getConfiguration("swaggerViewer").defaultHost || "localhost";
-
 const SERVER_PORT =
   vscode.workspace.getConfiguration("swaggerViewer").defaultPort || 18512;
 
 const FILE_CONTENT: { [key: string]: any } = {};
 
 export class PreviewServer {
-  currentHost: string = SERVER_HOST;
+  currentHost: string = null;
   currentPort: number = SERVER_PORT;
   io: socketio.Server;
   server: http.Server;
@@ -27,6 +24,9 @@ export class PreviewServer {
 
   public async initiateServer() {
     if (this.serverRunning) return;
+    this.currentHost =
+      vscode.workspace.getConfiguration("swaggerViewer").defaultHost ||
+      "localhost";
     this.currentPort = await getPortPromise({ port: this.currentPort });
     const app = express();
     app.use(express.static(path.join(__dirname, "..", "..", "static")));
@@ -46,6 +46,7 @@ export class PreviewServer {
     this.server = http.createServer(app);
     this.io = socketio(this.server);
 
+    app.set("host", this.currentHost);
     app.set("port", this.currentPort);
 
     this.startServer(this.currentPort);
@@ -61,7 +62,7 @@ export class PreviewServer {
 
   private startServer(port) {
     this.currentPort = port;
-    this.server.listen(this.currentPort, () => {
+    this.server.listen(this.currentPort, this.currentHost , () => {
       this.serverRunning = true;
     });
   }
