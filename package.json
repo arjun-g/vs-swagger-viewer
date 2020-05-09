@@ -110,7 +110,7 @@
 		"express": "^4.16.3",
 		"js-yaml": "^3.12.0",
 		"socket.io": "^2.1.1",
-		"swagger-parser": "^6.0.5",
+		"swagger-parser": "^9.0.1",
 		"swagger-ui-dist": "^3.25.0",
 		"vscode-languageclient": "^4.1.4",
 		"vscode-languageserver": "^4.4.2"
