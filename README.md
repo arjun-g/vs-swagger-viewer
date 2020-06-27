@@ -1,5 +1,7 @@
 [![Marketplace Version](https://vsmarketplacebadge.apphb.com/version/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer) [![Marketplace Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
 
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/arjunganesan)
+
 # Swagger Viewer - v3.0.0
 **Swagger Viewer lets you preview Swagger 2.0 and OpenAPI files as you type in Visual Studio Code. Additionally provide intellisense/linting for the files as well.**
 
