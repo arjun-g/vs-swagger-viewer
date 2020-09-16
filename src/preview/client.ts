@@ -96,7 +96,7 @@ export async function activate(context: vscode.ExtensionContext) {
       (uri) => {
         for (let document of vscode.workspace.textDocuments) {
           if (document.uri.toString() === uri) {
-            const parsedYAML = YAML.safeLoad(document.getText());
+            const parsedYAML = <any>YAML.safeLoad(document.getText());
             if (parsedYAML) {
               if (parsedYAML.swagger === "2.0") {
                 return "swaggerviewer:swagger";
