@@ -101,6 +101,10 @@
 				plugins: [
 					SwaggerUIBundle.plugins.DownloadUrl
 				],
+				requestInterceptor: function (req) {
+					return new Request(`${window.location.origin}/proxy?url=${encodeURIComponent(req.url)}`, req)
+				},
+				showMutatedRequest: false,
 				layout: "StandaloneLayout"
 			})
 

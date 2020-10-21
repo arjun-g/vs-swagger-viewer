@@ -5,6 +5,7 @@ import * as express from "express";
 import * as http from "http";
 import * as socketio from "socket.io";
 import * as SwaggerParser from "swagger-parser";
+import * as request from "request";
 import { getPortPromise } from "portfinder";
 
 const SERVER_PORT =
@@ -34,6 +35,10 @@ export class PreviewServer {
       "/node_modules",
       express.static(path.join(__dirname, "..", "..", "node_modules"))
     );
+    app.use('/proxy', (req, res) => {
+      res.header("Access-Control-Allow-Origin", "*");
+      request(req.query.url).pipe(res);
+    });
     app.use("/:fileHash", (req, res) => {
       let htmlContent = fs
         .readFileSync(path.join(__dirname, "..", "..", "static", "index.html"))

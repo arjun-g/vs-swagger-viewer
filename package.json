@@ -117,6 +117,7 @@
 		"express": "^4.17.1",
 		"js-yaml": "^3.13.1",
 		"portfinder": "^1.0.26",
+		"request": "^2.88.2",
 		"socket.io": "^2.3.0",
 		"swagger-parser": "^9.0.1",
 		"swagger-ui-dist": "^3.25.2"
