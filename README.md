@@ -65,7 +65,7 @@ To stop the preview server simply click the status bar item.
 
 **v3.0.0 Changes**
 * The primary functionality of the Swagger Viewer extension would be the ability to preview Swagger and OpenAPI files.
-* Swagger Viewer will just use the json schema of Swagger and OpenAPI to provide intellisense and linting. Recommend using teh extension [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) for full editing capabilities.
+* Swagger Viewer will just use the json schema of Swagger and OpenAPI to provide intellisense and linting. Recommend using the extension [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) for full editing capabilities.
 * Intellisense for Swagger 2.0 and OpenAPI 3.0 is available now. Added extension [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) as **extensionDependencies** for supporting YAML intellisense.
 * Default port changed to **18512**
 * Upgraded swagger-ui to version **3.25.2**
