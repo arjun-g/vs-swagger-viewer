@@ -15,9 +15,8 @@ class InlinePreview implements vscode.TextDocumentContentProvider {
   onDidChange?: vscode.Event<vscode.Uri>;
 
   constructor(private previewUrl: string, private filename: string) {
-    const showOnlyFileName: boolean = !!vscode.workspace.getConfiguration(
-      "swaggerViewer"
-    ).showOnlyFileName;
+    const showOnlyFileName: boolean =
+      !!vscode.workspace.getConfiguration("swaggerViewer").showOnlyFileName;
     const previewPanel = vscode.window.createWebviewPanel(
       "swaggerPreview",
       `Swagger Preview - ${
@@ -69,12 +68,12 @@ function getParsedContent(content: string, languageId) {
     if (languageId === "json") {
       return JSON.parse(fileContent);
     } else if (languageId === "yaml") {
-      return YAML.safeLoad(fileContent);
+      return YAML.load(fileContent);
     } else if (languageId === "plaintext") {
       if (fileContent.match(/^\s*[{[]/)) {
         return JSON.parse(fileContent);
       } else {
-        return YAML.safeLoad(fileContent);
+        return YAML.load(fileContent);
       }
     }
   } catch (ex) {
@@ -96,7 +95,7 @@ export async function activate(context: vscode.ExtensionContext) {
       (uri) => {
         for (let document of vscode.workspace.textDocuments) {
           if (document.uri.toString() === uri) {
-            const parsedYAML = YAML.safeLoad(document.getText());
+            const parsedYAML = YAML.load(document.getText());
             if (parsedYAML) {
               if (parsedYAML.swagger === "2.0") {
                 return "swaggerviewer:swagger";
@@ -154,13 +153,13 @@ export async function activate(context: vscode.ExtensionContext) {
         }
         fileHash = hashString(fileName.toLowerCase());
         previewServer.update(fileName, fileHash, fileContent);
-        const previewInBrowser: boolean = !!vscode.workspace.getConfiguration(
-          "swaggerViewer"
-        ).previewInBrowser;
+        const previewInBrowser: boolean =
+          !!vscode.workspace.getConfiguration("swaggerViewer").previewInBrowser;
 
         // Make the port available locally and get the full URI
         const previewUrl = await vscode.env.asExternalUri(
-            vscode.Uri.parse(previewServer.getUrl(fileHash)));
+          vscode.Uri.parse(previewServer.getUrl(fileHash))
+        );
 
         if (previewInBrowser) {
           new BrowserPreview(previewUrl.toString(), fileName);
@@ -176,7 +175,7 @@ export async function activate(context: vscode.ExtensionContext) {
           const intervalRef = setInterval(() => {
             if (previewServer.serverRunning) {
               clearInterval(intervalRef);
-              resolve();
+              resolve(null);
               if (!statusBarItem) {
                 statusBarItem = vscode.window.createStatusBarItem(
                   vscode.StatusBarAlignment.Right,
