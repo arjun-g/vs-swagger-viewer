@@ -11,7 +11,7 @@
   "version": "3.1.1",
   "publisher": "Arjun",
   "engines": {
-    "vscode": "^1.57.0"
+    "vscode": "^1.57.1"
   },
   "extensionDependencies": [
     "redhat.vscode-yaml"
