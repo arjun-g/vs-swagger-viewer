@@ -157,11 +157,16 @@ export async function activate(context: vscode.ExtensionContext) {
         const previewInBrowser: boolean = !!vscode.workspace.getConfiguration(
           "swaggerViewer"
         ).previewInBrowser;
+
+        // Make the port available locally and get the full URI
+        const previewUrl = await vscode.env.asExternalUri(
+            vscode.Uri.parse(previewServer.getUrl(fileHash)));
+
         if (previewInBrowser) {
-          new BrowserPreview(previewServer.getUrl(fileHash), fileName);
+          new BrowserPreview(previewUrl.toString(), fileName);
         } else {
           let inlinePreview = new InlinePreview(
-            previewServer.getUrl(fileHash),
+            previewUrl.toString(),
             fileName
           );
           context.subscriptions.push(inlinePreview.disposable);
