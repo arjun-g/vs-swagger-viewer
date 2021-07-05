@@ -120,6 +120,7 @@
     "socket.io": "^4.1.2",
     "swagger-parser": "^10.0.2",
     "swagger-ui-dist": "^3.51.1",
+    "socket.io": "^4.1.2",
     "utf-8-validate": "^5.0.5"
   },
   "bugs": {
