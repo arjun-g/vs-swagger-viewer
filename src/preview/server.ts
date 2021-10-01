@@ -40,11 +40,8 @@ export class PreviewServer {
       res.header("Access-Control-Allow-Origin", "*");
       const url = new URL(req.body.url as string);
       const options: http.RequestOptions | https.RequestOptions = {
-        hostname: url.hostname,
-        port: url.port,
-        path: `${url.pathname}${url.search ? `?${url.search}` : ''}${url.hash ? `#${url.hash}` : ''}`,
         method: req.body.method,
-        headers: req.body.headers,
+        headers: req.body.headers
       };
       let protocol;
       if (url.protocol === 'http:') {
@@ -55,10 +52,11 @@ export class PreviewServer {
       } else {
         throw new Error('Unsupported protocol');
       }
-      const upstreamReq = protocol.request(options, (upstreamRes) => {
+      const upstreamReq = protocol.request(url, options, (upstreamRes) => {
         res.writeHead(upstreamRes.statusCode, upstreamRes.headers);
         upstreamRes.pipe(res);
       }).on('error', (err) => {
+        console.error(err);
         res.statusCode = 500;
         res.end();
       });
