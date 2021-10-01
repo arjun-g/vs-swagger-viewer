@@ -77,7 +77,7 @@ export class PreviewServer {
     });
 
     this.server = http.createServer(app);
-    this.io = socketio(this.server);
+    this.io = new socketio.Server(this.server);
 
     app.set("host", this.currentHost);
     app.set("port", this.currentPort);
@@ -95,7 +95,7 @@ export class PreviewServer {
 
   private startServer(port) {
     this.currentPort = port;
-    this.server.listen(this.currentPort, this.currentHost , () => {
+    this.server.listen(this.currentPort, this.currentHost, () => {
       this.serverRunning = true;
     });
   }
@@ -108,9 +108,7 @@ export class PreviewServer {
         {} as any
       );
       this.io && this.io.to(fileHash).emit("TEXT_UPDATE", content);
-    } catch (err) {
-      
-    }
+    } catch (err) {}
   }
 
   getUrl(fileHash: string): string {
