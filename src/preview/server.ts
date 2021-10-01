@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as vscode from "vscode";
 import * as express from "express";
 import * as http from "http";
+import * as https from "https";
 import * as socketio from "socket.io";
 import * as SwaggerParser from "swagger-parser";
 import { getPortPromise } from "portfinder";
@@ -34,6 +35,36 @@ export class PreviewServer {
       "/node_modules",
       express.static(path.join(__dirname, "..", "..", "node_modules"))
     );
+    app.use(express.json());
+    app.post('/proxy', (req, res) => {
+      res.header("Access-Control-Allow-Origin", "*");
+      const url = new URL(req.body.url as string);
+      const options: http.RequestOptions | https.RequestOptions = {
+        method: req.body.method,
+        headers: req.body.headers
+      };
+      let protocol;
+      if (url.protocol === 'http:') {
+        protocol = http;
+      } else if (url.protocol === 'https:') {
+        protocol = https;
+        (options as https.RequestOptions).rejectUnauthorized = false;
+      } else {
+        throw new Error('Unsupported protocol');
+      }
+      const upstreamReq = protocol.request(url, options, (upstreamRes) => {
+        res.writeHead(upstreamRes.statusCode, upstreamRes.headers);
+        upstreamRes.pipe(res);
+      }).on('error', (err) => {
+        console.error(err);
+        res.statusCode = 500;
+        res.end();
+      });
+      if (req.body.body) {
+        upstreamReq.write(req.body.body);
+      }
+      upstreamReq.end();
+    });
     app.use("/:fileHash", (req, res) => {
       let htmlContent = fs
         .readFileSync(path.join(__dirname, "..", "..", "static", "index.html"))
