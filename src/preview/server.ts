@@ -3,9 +3,9 @@ import * as fs from "fs";
 import * as vscode from "vscode";
 import * as express from "express";
 import * as http from "http";
+import * as https from "https";
 import * as socketio from "socket.io";
 import * as SwaggerParser from "swagger-parser";
-import * as request from "request";
 import { getPortPromise } from "portfinder";
 
 const SERVER_PORT =
@@ -35,9 +35,37 @@ export class PreviewServer {
       "/node_modules",
       express.static(path.join(__dirname, "..", "..", "node_modules"))
     );
-    app.use('/proxy', (req, res) => {
+    app.use(express.json());
+    app.post('/proxy', (req, res) => {
       res.header("Access-Control-Allow-Origin", "*");
-      request(req.query.url).pipe(res);
+      const url = new URL(req.body.url as string);
+      const options: http.RequestOptions | https.RequestOptions = {
+        hostname: url.hostname,
+        port: url.port,
+        path: `${url.pathname}${url.search ? `?${url.search}` : ''}${url.hash ? `#${url.hash}` : ''}`,
+        method: req.body.method,
+        headers: req.body.headers,
+      };
+      let protocol;
+      if (url.protocol === 'http:') {
+        protocol = http;
+      } else if (url.protocol === 'https:') {
+        protocol = https;
+        (options as https.RequestOptions).rejectUnauthorized = false;
+      } else {
+        throw new Error('Unsupported protocol');
+      }
+      const upstreamReq = protocol.request(options, (upstreamRes) => {
+        res.writeHead(upstreamRes.statusCode, upstreamRes.headers);
+        upstreamRes.pipe(res);
+      }).on('error', (err) => {
+        res.statusCode = 500;
+        res.end();
+      });
+      if (req.body.body) {
+        upstreamReq.write(req.body.body);
+      }
+      upstreamReq.end();
     });
     app.use("/:fileHash", (req, res) => {
       let htmlContent = fs

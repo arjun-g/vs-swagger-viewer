@@ -102,7 +102,17 @@
 					SwaggerUIBundle.plugins.DownloadUrl
 				],
 				requestInterceptor: function (req) {
-					return new Request(`${window.location.origin}/proxy?url=${encodeURIComponent(req.url)}`, req)
+					const body = JSON.stringify({
+						url: req.url,
+						method: req.method,
+						headers: req.headers,
+						body: req.body,
+					});
+					req.url = `${window.location.origin}/proxy`;
+					req.method = 'POST';
+					req.headers = {'content-type': 'application/json'};
+					req.body = body;
+					return req;
 				},
 				showMutatedRequest: false,
 				layout: "StandaloneLayout"
