@@ -1,6 +1,6 @@
 [![Marketplace Version](https://vsmarketplacebadge.apphb.com/version/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer) [![Marketplace Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/arjunganesan)
+[![ko-fi](./githubbutton_sm.png)](https://ko-fi.com/arjunganesan)
 
 # Swagger Viewer - v3.1.2
 
