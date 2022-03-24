@@ -6,7 +6,10 @@
 		"sourceMap": true,
 		"outDir": "out",
 		"rootDir": "src",
-		"lib": [ "es6" ],
+		"lib": [ 
+			"es6",
+			"DOM"
+		],
 		"noImplicitAny": false,
 		"noImplicitReturns": false,
 		"noUnusedLocals": false,
