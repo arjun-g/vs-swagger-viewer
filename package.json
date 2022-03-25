@@ -114,6 +114,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "js-yaml": "^4.1.0",
+    "openapi-types": "^10.0.0",
     "portfinder": "^1.0.28",
     "socket.io": "^4.1.2",
     "swagger-parser": "^10.0.2",
