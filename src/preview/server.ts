@@ -34,9 +34,13 @@ export class PreviewServer {
       "/node_modules",
       express.static(path.join(__dirname, "..", "..", "node_modules"))
     );
+
+    var isDarkMode = vscode.workspace.getConfiguration("swaggerViewer").useDarkTheme;
+    var staticPageName = isDarkMode ? "index_dark.html" : "index.html"
+
     app.use("/:fileHash", (req, res) => {
       let htmlContent = fs
-        .readFileSync(path.join(__dirname, "..", "..", "static", "index.html"))
+        .readFileSync(path.join(__dirname, "..", "..", "static", staticPageName))
         .toString("utf-8")
         .replace("%FILE_HASH%", req.params.fileHash);
       res.setHeader("Content-Type", "text/html");

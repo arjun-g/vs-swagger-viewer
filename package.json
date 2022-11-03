@@ -67,6 +67,11 @@
           "type": "boolean",
           "default": false,
           "description": "Whether to show only the filename in the preview title, default: show filename along with path"
+        },
+        "swaggerViewer.useDarkTheme": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to use a dark theme in the preview window. (Requires restart of the Swagger preview server)."
         }
       }
     },
