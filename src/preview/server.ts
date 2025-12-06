@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as vscode from "vscode";
-import * as express from "express";
+import express from "express";
 import * as http from "http";
 import * as socketio from "socket.io";
 import * as SwaggerParser from "swagger-parser";
@@ -13,10 +13,10 @@ const SERVER_PORT =
 const FILE_CONTENT: { [key: string]: any } = {};
 
 export class PreviewServer {
-  currentHost: string = null;
+  currentHost: string = "localhost";
   currentPort: number = SERVER_PORT;
-  io: socketio.Server;
-  server: http.Server;
+  io!: socketio.Server;
+  server!: http.Server;
 
   serverRunning: boolean = false;
 
@@ -34,7 +34,7 @@ export class PreviewServer {
       "/node_modules",
       express.static(path.join(__dirname, "..", "..", "node_modules"))
     );
-    app.use("/:fileHash", (req, res) => {
+    app.use("/:fileHash", (req: express.Request, res: express.Response) => {
       let htmlContent = fs
         .readFileSync(path.join(__dirname, "..", "..", "static", "index.html"))
         .toString("utf-8")
@@ -55,36 +55,44 @@ export class PreviewServer {
       socket.on("GET_INITIAL", function (data, fn) {
         let fileHash = data.fileHash;
         socket.join(fileHash);
+        console.log("Client requesting initial content for hash:", fileHash, "Available:", !!FILE_CONTENT[fileHash]);
         fn(FILE_CONTENT[fileHash]);
       });
     });
   }
 
-  private startServer(port) {
+  private startServer(port: number): void {
     this.currentPort = port;
     this.server.listen(this.currentPort, this.currentHost, () => {
       this.serverRunning = true;
     });
   }
 
-  async update(filePath: string, fileHash: string, content: any) {
+  async update(filePath: string, fileHash: string, content: any): Promise<void> {
     try {
-      FILE_CONTENT[fileHash] = await SwaggerParser.bundle(
+      FILE_CONTENT[fileHash] = await (SwaggerParser as any).bundle(
         filePath,
         content,
-        {} as any
+        {}
       );
+      console.log("Updated content for hash:", fileHash, "Content exists:", !!FILE_CONTENT[fileHash]);
+      this.io && this.io.to(fileHash).emit("TEXT_UPDATE", FILE_CONTENT[fileHash]);
+    } catch (err) {
+      console.error("Error updating swagger content:", err);
+      // If bundling fails, use the original content
+      FILE_CONTENT[fileHash] = content;
       this.io && this.io.to(fileHash).emit("TEXT_UPDATE", content);
-    } catch (err) {}
+    }
   }
 
   getUrl(fileHash: string): string {
     return `http://${this.currentHost}:${this.currentPort}/${fileHash}`;
   }
 
-  stop() {
-    this.server.close();
-    this.server = null;
+  stop(): void {
+    if (this.server) {
+      this.server.close();
+    }
     this.serverRunning = false;
   }
 }

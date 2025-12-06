@@ -1,16 +1,38 @@
-[![Marketplace Version](https://vsmarketplacebadge.apphb.com/version/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer) [![Marketplace Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/Arjun.swagger-viewer.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/Arjun.swagger-viewer?style=flat-square&label=VS%20Code%20Marketplace&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/Arjun.swagger-viewer?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/Arjun.swagger-viewer?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
+[![License](https://img.shields.io/github/license/arjun-g/vs-swagger-viewer?style=flat-square)](https://github.com/arjun-g/vs-swagger-viewer/blob/master/LICENSE.md)
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/arjunganesan)
+# Swagger Viewer - v3.2.0
 
-# Swagger Viewer - v3.1.2
-
-**Swagger Viewer lets you preview Swagger 2.0 and OpenAPI files as you type in Visual Studio Code. Additionally provide intellisense/linting for the files as well.**
+**Swagger Viewer lets you preview Swagger 2.0, OpenAPI 3.0, and OpenAPI 3.1 files as you type in Visual Studio Code. Additionally provides intellisense/linting for the files as well.**
 
 It works on swagger files in json and yaml format. Preview happens in real time as you type.
 
+## What's New in v3.2.0
+
+### Major Updates
+- 🔒 **Critical Security Fix**: Updated Swagger UI to v5.18.2 (fixes XSS vulnerability)
+- ✨ **OpenAPI 3.1.0**: Full support for the latest OpenAPI specification
+- 🎨 **Dark Theme**: Automatic theme detection based on VS Code settings
+- 🌐 **Remote Development**: Works seamlessly with SSH, WSL, Containers, and Codespaces
+
+### New Features
+- 📁 **Workspace Explorer**: Tree view showing all Swagger/OpenAPI files in your workspace
+- 🌍 **URL Preview**: Load and preview Swagger files from remote URLs
+- 📋 **Copy/Paste Support**: Full clipboard functionality in preview
+- 🔍 **Zoom Control**: Adjustable zoom level (50-200%)
+- 🔄 **Hot Reload**: Auto-refresh when external references change
+
+### Developer Experience
+- 🚀 **Modern Stack**: TypeScript 5.7.2, strict mode, latest dependencies
+- ⚡ **Performance**: Improved compilation and runtime
+- 🛡️ **Type Safety**: Enhanced error handling and validation
+- ✅ **Zero Vulnerabilities**: All npm audit issues resolved
+
 ## Preview
 
-To start
+### Local Files
 
 - Open the swagger file and press F1.
 - Run the Command `Preview Swagger`.
@@ -23,9 +45,19 @@ OR
 
 - Right click file in explorer panel and click `Preview Swagger`
 
-THEN
+OR
 
-- Preview it in vscode Itself like this
+- Click on any Swagger/OpenAPI file in the **Swagger/OpenAPI Files** tree view in the Explorer sidebar
+
+### Remote Files (URLs)
+
+- Press F1 and run `Preview Swagger from URL`
+- Enter the URL of your Swagger/OpenAPI file (e.g., `https://petstore.swagger.io/v2/swagger.json`)
+- The preview will load the remote specification
+
+### Workspace Explorer
+
+The extension automatically discovers all Swagger/OpenAPI files in your workspace and displays them in a dedicated tree view in the Explorer sidebar. Click any file to preview it instantly.
 
 ![Swagger Preview](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/swagger-preview.gif)
 
@@ -61,13 +93,69 @@ In the preview title the file name along with the full path is displayed by defa
 
 Default host(localhost) of the preview url can be changed by changing the `swaggerViewer.defaultHost` value in `User/Workspace Settings`
 
+### Adjust Zoom Level
+
+If the preview text appears too large or too small, you can adjust the zoom level by changing `swaggerViewer.zoomLevel` (50-200%, default: 100%) in `User/Workspace Settings`
+
 ### Stop Swagger Viewer Preview Server
 
 To stop the preview server simply click the status bar item.
 
 ![Stop Swagger Server](https://cdn.rawgit.com/arjun-g/vs-swagger-viewer/master/docs/stop-swagger-preview-server.png)
 
+## Platform Support
+
+This extension requires a Node.js runtime and works in:
+- ✅ VS Code Desktop (Windows, macOS, Linux)
+- ✅ Remote - SSH
+- ✅ Remote - WSL
+- ✅ Remote - Containers
+- ✅ GitHub Codespaces
+- ❌ Browser-based VS Code (vscode.dev, github.dev)
+
+*Note: Browser support is planned for a future release using a hybrid architecture.*
+
+## Features
+
+- ✅ **Real-time Preview**: See changes as you type
+- ✅ **Swagger 2.0 Support**: Full support for Swagger/OpenAPI 2.0
+- ✅ **OpenAPI 3.0 & 3.1**: Complete OpenAPI 3.0.x and 3.1.x support
+- ✅ **IntelliSense**: Auto-completion and validation via YAML extension
+- ✅ **Workspace Explorer**: Tree view showing all API specs in your workspace
+- ✅ **URL Import**: Preview Swagger files from remote URLs
+- ✅ **Multiple Files**: Preview multiple swagger files simultaneously
+- ✅ **External References**: Support for $ref with hot reload
+- ✅ **Dark Theme**: Automatic theme detection and support
+- ✅ **Remote Development**: Works with SSH, WSL, Containers, and Codespaces
+- ✅ **Copy/Paste**: Full clipboard support in preview
+- ✅ **Zoom Control**: Adjustable zoom level (50-200%)
+- ✅ **Browser Preview**: Option to preview in external browser
+- ✅ **Customizable**: Configure host, port, and display options
+- ✅ **Secure**: Latest Swagger UI with security patches
+
 ## Releases
+
+**v3.2.0 Changes (December 2025)**
+
+- 🔒 **SECURITY**: Updated Swagger UI from v3.x to v5.18.2 - fixes DOM XSS vulnerability ([#111](https://github.com/arjun-g/vs-swagger-viewer/issues/111))
+- ✨ **NEW**: OpenAPI 3.1.0 support ([#118](https://github.com/arjun-g/vs-swagger-viewer/issues/118))
+- 🎨 **NEW**: Automatic dark theme support based on VS Code theme ([#108](https://github.com/arjun-g/vs-swagger-viewer/issues/108))
+- 🌐 **NEW**: Remote development support (SSH, WSL, Containers, Codespaces)
+- 📁 **NEW**: Workspace explorer tree view - discover all Swagger/OpenAPI files in workspace
+- 🌍 **NEW**: Preview Swagger files from remote URLs
+- 📋 **FIXED**: Copy/paste support in preview webview ([#91](https://github.com/arjun-g/vs-swagger-viewer/issues/91))
+- 🔍 **FIXED**: Zoom level customization (50-200%) ([#107](https://github.com/arjun-g/vs-swagger-viewer/issues/107))
+- 🔄 **FIXED**: Hot reload for external references in YAML files ([#117](https://github.com/arjun-g/vs-swagger-viewer/issues/117), [#106](https://github.com/arjun-g/vs-swagger-viewer/issues/106))
+- 🐛 **FIXED**: Multiple file preview issues ([#114](https://github.com/arjun-g/vs-swagger-viewer/issues/114))
+- 🐛 **FIXED**: Error output spam and extension crashes ([#121](https://github.com/arjun-g/vs-swagger-viewer/issues/121))
+- ⬆️ **UPDATED**: TypeScript 3.x → 5.7.2 with strict mode enabled
+- ⬆️ **UPDATED**: All dependencies to latest stable versions
+- ⬆️ **UPDATED**: VS Code engine requirement to 1.85.0+
+- 🛡️ **IMPROVED**: Better error handling and user feedback
+- 🛡️ **IMPROVED**: Added Content Security Policy to webviews
+- 🗑️ **REMOVED**: Deprecated `activationEvents` from package.json
+- 📝 **UPDATED**: Modern badges and improved documentation
+- ✅ **VERIFIED**: Zero npm audit vulnerabilities
 
 **v3.0.0 Changes**
 

@@ -8,16 +8,18 @@
     "theme": "dark"
   },
   "license": "SEE LICENSE IN LICENSE.md",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "publisher": "Arjun",
   "engines": {
-    "vscode": "^1.57.1"
+    "vscode": "^1.85.0"
   },
-  "extensionDependencies": [
-    "redhat.vscode-yaml"
+  "extensionKind": [
+    "workspace"
   ],
+  "extensionDependencies": [],
   "categories": [
-    "Other"
+    "Programming Languages",
+    "Linters"
   ],
   "keywords": [
     "swagger",
@@ -42,6 +44,25 @@
       {
         "command": "swagger.preview",
         "title": "Preview Swagger"
+      },
+      {
+        "command": "swagger.previewFromUrl",
+        "title": "Preview Swagger from URL"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "swaggerFiles",
+          "name": "Swagger/OpenAPI Files",
+          "icon": "static/images/logo.png"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "swaggerFiles",
+        "contents": "No Swagger/OpenAPI files found in your workspace.\n[Open Swagger File](command:workbench.action.files.openFile)\n[Preview from URL](command:swagger.previewFromUrl)"
       }
     ],
     "configuration": {
@@ -67,6 +88,13 @@
           "type": "boolean",
           "default": false,
           "description": "Whether to show only the filename in the preview title, default: show filename along with path"
+        },
+        "swaggerViewer.zoomLevel": {
+          "type": "number",
+          "default": 100,
+          "minimum": 50,
+          "maximum": 200,
+          "description": "Zoom level for the preview (50-200%, default: 100%)"
         }
       }
     },
@@ -105,22 +133,21 @@
     ]
   },
   "devDependencies": {
-    "@types/express": "^4.17.6",
-    "@types/js-yaml": "^3.12.3",
-    "@types/node": "^13.13.5",
-    "@types/socket.io": "^2.1.4",
-    "@types/swagger-parser": "^7.0.1",
-    "@types/vscode": "^1.57.1",
-    "typescript": "^3.8.3"
+    "@types/express": "^4.17.21",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^18.19.0",
+    "@types/swagger-parser": "^4.0.3",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.21.2",
     "js-yaml": "^4.1.0",
-    "portfinder": "^1.0.28",
-    "socket.io": "^4.1.2",
-    "swagger-parser": "^10.0.2",
-    "swagger-ui-dist": "^3.51.1",
-    "utf-8-validate": "^5.0.5"
+    "portfinder": "^1.0.32",
+    "socket.io": "^4.8.1",
+    "swagger-parser": "^10.0.3",
+    "swagger-ui-dist": "^5.18.2",
+    "utf-8-validate": "^6.0.5"
   },
   "bugs": {
     "url": "https://github.com/arjun-g/vs-swagger-viewer/issues"

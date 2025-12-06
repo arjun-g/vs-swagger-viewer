@@ -86,7 +86,22 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 
+		// Detect VS Code theme
+		function getVSCodeTheme() {
+			const body = document.body;
+			const bgColor = window.getComputedStyle(body).backgroundColor;
+			// Parse RGB values to determine if dark theme
+			const rgb = bgColor.match(/\d+/g);
+			if (rgb) {
+				const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+				return brightness < 128 ? 'dark' : 'light';
+			}
+			return 'light';
+		}
+
 		function buildSwaggerUI(jsonSpec) {
+			const theme = getVSCodeTheme();
+			
 			// Build a system
 			const ui = SwaggerUIBundle({
 				spec: jsonSpec,
@@ -94,6 +109,10 @@
 				deepLinking: true,
 				filter: '',
 				showCommonExtensions: true,
+				syntaxHighlight: {
+					activate: true,
+					theme: theme === 'dark' ? 'monokai' : 'agate'
+				},
 				presets: [
 					SwaggerUIBundle.presets.apis,
 					SwaggerUIStandalonePreset
